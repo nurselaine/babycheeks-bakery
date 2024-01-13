@@ -1,10 +1,12 @@
 import React from 'react';
+import Wheel from './component/Wheel';
 
 const App = () => {
   return (
-    <h1>
-      From Scratch react app
-    </h1>
+    <div>
+      <h1>Baby cheek's bakery</h1>
+      <Wheel />
+    </div>
   )
 }
 
