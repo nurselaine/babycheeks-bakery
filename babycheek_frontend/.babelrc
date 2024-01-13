@@ -1,0 +1,3 @@
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"] //tells babel to use packages installed to compile the code
+}
