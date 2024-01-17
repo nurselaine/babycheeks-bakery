@@ -10,13 +10,18 @@ const get_coor = (radian_interval, radius) => {
   }
 }
 
-const Card = ({radian_interval, radius, center}) => {
+const Card = ({index, radius, center, rotateAngle}) => {
+  let radian_interval= (Math.PI / 3) * index;
   let coor = get_coor(radian_interval, radius);
 
   return (
-    <div style={{...styles.card, left: `${center.x + coor.x}px`, top: `${center.y + coor.y}px`}}>
-
-    </div>
+    <div 
+      style={{
+        ...styles.card, 
+        left: `${center.x + coor.x}px`, 
+        top: `${center.y + coor.y}px`
+      }}
+    >{index}</div>
   )
 }
 

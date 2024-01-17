@@ -1,82 +1,87 @@
 import React, { useEffect, useState, useRef } from "react";
 import Card from "./Card";
+import "./Wheel.css";
 
-const Wheel = ({props}) => {
+const Wheel = ({ props }) => {
   const wheelRef = useRef(null);
-  let [radius, setRadius] = useState(150);
-  let [cards, setCards] = useState([]); // all images 
-  let [theta, setTheta] = useState(0.0); 
+  let [radius] = useState(150);
+  let [cards, setCards] = useState([]); // all images
   let [rotateAngle, setRotateAngle] = useState(0);
-  // theta & temp_theta controls the degree the wheel is rotated 
-
-  let temp_theta = 0.0;
+  let [currentImage, setCurrentImage] = useState(3);
+  let [scroll, setScroll] = useState(0);
 
   useEffect(() => {
     let center_of_wheel = {
       x: parseFloat(wheelRef.current.offsetWidth) / 2,
       y: parseFloat(wheelRef.current.offsetHeight) / 2,
-    }
+    };
 
     let temp_cards = [];
 
-    for(let i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i++) {
       temp_cards.push(
-        <Card 
-          radius={radius} 
-          radian_interval={(Math.PI / 3) * i} 
-          center={center_of_wheel} key={`card_${i}`} 
+        <Card
+          radius={radius}
+          center={center_of_wheel}
+          key={`card_${i}`}
+          index={i}
+          rotateAngle={rotateAngle}
         />
-      )
+      );
     }
 
     setCards(temp_cards);
-  }, []);
+  }, [rotateAngle, radius]);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPos = window.scrollY;
-      const newRotateAngle = scrollPos / 6;
+      const cardIndex = Math.floor(scrollPos / (window.innerHeight / 6));
+      const newRotateAngle = cardIndex * (360 / 6);
       setRotateAngle(newRotateAngle);
-    }
+    };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-    }
-  }, []);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scroll]);
 
-  const handleScroll = (e) => {
-    styles.wheel.transform = `rotate(${window.scrollY / 2}deg)`
-    // clearTimeout(anim_id);
-    // styles.wheel.transform = `translate(-50%, -50%) rotate(${temp_theta + (e.deltaY * 0.5)}deg)`;
-    // temp_theta += (e.deltaY * 0.5);
-
-    // let anim_id = setTimeout(() => {
-    //   setTheta({theta: temp_theta});
-    // }, 150);
+  const rotateWheel = () => {
+    setCurrentImage(currentImage + 1);
+    setRotateAngle(60 * currentImage);
   }
 
   return (
-    <div ref={wheelRef} style={{...styles.wheel, transform: `rotate(${rotateAngle}deg)`}} id='wheel'>
+    <div
+      ref={wheelRef}
+      style={{ 
+        ...styles.wheel, 
+        transform: `rotate(${rotateAngle}deg)` 
+      }}
+      onWheel={() => rotateWheel()}
+      id="wheel"
+    >
+      <button onClick={() => rotateWheel()}>rotate</button>
       {cards}
     </div>
-  )
-}
+  );
+};
 
 const styles = {
   wheel: {
-    margin: '0',
-    padding: '0',
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    height: '100px',
-    width: '100px',
-    backgroundColor: 'red',
-    borderRadius: '50px'
-  }
-}
+    margin: "0",
+    padding: "0",
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    height: "100px",
+    width: "100px",
+    border: "red solid 1px",
+    borderRadius: "50px",
+  },
+};
 
 export default Wheel;
