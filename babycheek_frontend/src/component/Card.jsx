@@ -5,12 +5,12 @@ import React from "react";
 // use cosine for x coor
 const get_coor = (radian_interval, radius) => {
   return {
-    x: Math.cos(radian_interval) * radius,
-    y: Math.sin(radian_interval) * radius,
+    x: Math.cos(radian_interval) * (radius * 2),
+    y: Math.sin(radian_interval) * (radius * 2),
   }
 }
 
-const Card = ({index, radius, center, rotateAngle}) => {
+const Card = ({index, radius, center}) => {
   let radian_interval= (Math.PI / 3) * index;
   let coor = get_coor(radian_interval, radius);
 
@@ -33,10 +33,10 @@ const styles = {
     left: '50%',
     top: '50%',
     transform: 'translate(-50%, -50%)',
-    height: '50px',
-    width: '50px',
+    height: '220px',
+    width: '220px',
     backgroundColor: 'blue',
-    borderRadius: '25px'
+    borderRadius: '50%'
   }
 }
 

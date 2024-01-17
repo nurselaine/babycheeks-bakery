@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import Card from "./Card";
-import "./Wheel.css";
 
 const Wheel = ({ props }) => {
   const wheelRef = useRef(null);
@@ -8,7 +7,7 @@ const Wheel = ({ props }) => {
   let [cards, setCards] = useState([]); // all images
   let [rotateAngle, setRotateAngle] = useState(0);
   let [currentImage, setCurrentImage] = useState(3);
-  let [scroll, setScroll] = useState(0);
+  let [scroll] = useState(0);
 
   useEffect(() => {
     let center_of_wheel = {
@@ -31,7 +30,7 @@ const Wheel = ({ props }) => {
     }
 
     setCards(temp_cards);
-  }, [rotateAngle, radius]);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,11 +45,13 @@ const Wheel = ({ props }) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [scroll]);
+  }, []);
 
-  const rotateWheel = () => {
-    setCurrentImage(currentImage + 1);
-    setRotateAngle(60 * currentImage);
+  const rotateWheel = (direction) => {
+    const newImage = direction === 'right' ? currentImage + 1 : currentImage - 1;
+    const newRotateAngle = newImage * (360 / 6);
+    setCurrentImage(currentImage);
+    setRotateAngle(newRotateAngle);
   }
 
   return (
@@ -60,10 +61,9 @@ const Wheel = ({ props }) => {
         ...styles.wheel, 
         transform: `rotate(${rotateAngle}deg)` 
       }}
-      onWheel={() => rotateWheel()}
+      onWheel={(e) => e.deltaY > 0 ? rotateWheel('right') : rotateWheel('left')}
       id="wheel"
     >
-      <button onClick={() => rotateWheel()}>rotate</button>
       {cards}
     </div>
   );
@@ -74,14 +74,23 @@ const styles = {
     margin: "0",
     padding: "0",
     position: "fixed",
-    top: "50%",
-    left: "50%",
+    top: "30%",
+    left: "90%",
     transform: "translate(-50%, -50%)",
-    height: "100px",
-    width: "100px",
+    height: "300px",
+    width: "300px",
     border: "red solid 1px",
-    borderRadius: "50px",
+    borderRadius: "50%",
   },
+};
+
+const breakpoints = {
+  base: "0em", // 0px
+  sm: "30em", // ~480px. em is a relative unit and is dependant on the font size.
+  md: "48em", // ~768px
+  lg: "62em", // ~992px
+  xl: "80em", // ~1280px
+  "2xl": "96em", // ~1536px
 };
 
 export default Wheel;
