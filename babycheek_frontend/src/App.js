@@ -1,9 +1,10 @@
 import React from 'react';
 import Wheel from './component/Wheel';
+import './App.css';
 
 const App = () => {
   return (
-    <div>
+    <div id='App'>
       <h1>Baby cheek's bakery</h1>
       <Wheel />
     </div>
