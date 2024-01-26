@@ -1,41 +1,53 @@
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import '../../Page/Page.css';
+import React, { useEffect, useRef } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useInView,
+  useAnimation,
+} from "framer-motion";
+import "../../Page/Page.css";
 
 const HeroHeader = () => {
-  return (
-    <AnimatePresence
-      mode={'wait'}
-    >
-      <motion.div
-        initial='initialState'
-        animate='animateState'
-        exit='exitState'
-        transition={{
-          type: 'tween',
-          duration: 0.5
-        }}
-        variants={{
-          initialState: {
-            opacity: 0
-          },
-          animateState: {
-            opacity: 1
-          },
-          exitState: {
-            opacity: 0
-          }
-        }}
-      >
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const mainControls = useAnimation();
 
-      <h1 className="header-title">Cookie Name</h1>
-      <h4 className="header-description">Yummy yummy delicious cookie description lalalala.</h4>
-      <button className="order-btn">
-        ORDER NOW
-      </button>
-      </motion.div>
-    </AnimatePresence>
-  )
-}
+  useEffect(() => {
+    if (isInView) {
+      mainControls.start("animateState");
+    }
+  }, [isInView]);
+
+  return (
+    <div ref={ref}>
+      <AnimatePresence mode={"wait"}>
+        <motion.div
+          variants={{
+            initialState: {
+              opacity: 0,
+              x: -100,
+            },
+            animateState: {
+              opacity: 1,
+              x: 0,
+            },
+          }}
+          animate={mainControls}
+          initial="initialState"
+          transition={{
+            duration: 0.5,
+            delay: 0.25,
+          }}
+        >
+          <h1 className="header-title">Cookie Name</h1>
+          <h4 className="header-description">
+            Yummy yummy delicious cookie description lalalala.
+          </h4>
+          <button className="order-btn">ORDER NOW</button>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+};
 
 export default HeroHeader;

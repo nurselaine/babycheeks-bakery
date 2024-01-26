@@ -3,11 +3,9 @@ import Nav from "../component/Navigation/Nav";
 
 const LandingLayout = ({children}) => {
   return (
-    <section>
+    <section style={{ height: 'auto', width: '100%'}}>
       <Nav />
-      <div>
-        {children}
-      </div>
+      {children}
     </section>
   )
 }

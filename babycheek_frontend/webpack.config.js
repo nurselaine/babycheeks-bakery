@@ -6,7 +6,8 @@ module.exports = {
   mode: 'development',
   output: { // specifies where webpack puts its files after building. provide a path and filename
     path: path.resolve(__dirname, './dist'),
-    filename: 'index_bundle.js'
+    filename: 'index_bundle.js',
+    publicPath: '/'// redirect ALL server requests to /index.html
   },
   target: 'web', // specifies where app will run
   devServer: { // specifies development server settings
@@ -17,6 +18,7 @@ module.exports = {
     open: true, // automatically open browser after its bundled all files
     hot: true, // enables Hot module replacement exchanges, adds, removes while app is running without a full reload (improve optimization)
     liveReload: true, // automatically update app as changes are made
+    historyApiFallback: true, // redirects 404s to /index.html
   },
   resolve: { // tells webpack to accept serveral extensions
     extensions: ['.js', '.jsx', '.json'],

@@ -30,9 +30,4 @@ const FirstPage = ({ bg_image, mbg_image }) => {
   )
 }
 
-const styles = {
-  background: {
-  }
-}
-
 export default FirstPage;

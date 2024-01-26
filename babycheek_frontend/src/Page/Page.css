@@ -1,5 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
+:root {
+  --color-empty-shade: 	#FDFDFD;
+  --color-light-shade: #eaeaea;
+  --color-lighter-shade: #edebe6;
+  --color-dark-shade: #6f6f66;
+  --color-darker-shade: #ecf3d3;
+  --color-text: #2d2d26;
+  --color-accent: #FDEAEC;
+  --color-constructive: #109d46;
+  --color-destructive: #d94b03;
+}
+
 .background {
   position: fixed;
   width: 100%;
@@ -47,47 +59,64 @@
   transition: 0.5s;
 }
 
-/* @media only screen and(max-width: 400px){
-  .header {
-    padding: 50px 20px;
-  }
-  
-  .background {
-    height: 100%;
-    background-position: left;
-  }
-} */
-
-/* @media only screen and(max-width: 768px){
-  .background {
-    height: 100%;
-    background-position: left;
-  }
-} */
-
-/* @media only screen and(max-width: 1200px){
-
-  .header {
-    padding: 50px 20px;
-  }
-
-  .background {
-    height: 100%;
-    background-position: left;
-  }
-} */
-
-/* @media only screen and(max-width: 1536px){
-  .background {
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  }
-} */
-
 .page_image {
   height: 100%;
   background-position: left;
+}
+
+.checkout-page {
+  width: 100%;
+  min-height: auto;
+  background-color: var(--color-accent);
+  display: flex;
+  flex-direction: column;
+}
+
+.store-items{
+  width: 50%;
+  flex: 1; /* ensure div will take up remaining vertical space*/
+  margin: 0 auto 0 auto;
+  padding-top: 8rem;
+}
+
+.submitOrder-btn {
+  width: 300px;
+  color: lightgray;
+  background-color: black;
+  border-radius: 35px;
+  padding: 20px 30px;
+  font-size: 20px;
+  font-weight: bolder;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 30px auto;
+  border: none;
+  box-shadow: 0px 0px 45px 0px rgba(150,150,150,0.5);
+  cursor: pointer;
+}
+
+.submitOrder-btn:hover {
+  color: black;
+  background-color: lightgray;
+  transition: 0.5s;
+}
+
+@media only screen and (max-width: 600px) {
+  .header-title {
+    font-size: 7em;
+  }
+
+  .header-description {
+    font-size: 1em;
+    letter-spacing: 2px;
+  }
+
+  .store-items {
+    width: 80%;
+  }
+
+  .submitOrder-btn {
+    width: 200px;
+    font-size: 15px;
+  }
 }
