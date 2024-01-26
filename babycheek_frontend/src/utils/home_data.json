@@ -30,5 +30,13 @@
     "A warm cookie butter cookie packed with cookie butter pieces and creamy white chips",
     "A warm chocolate cookie filled with a classic mix of semi-sweet chocolate and mint chips",
     "The tried and true cookie peppered with sweet and crispy M&M's candies"
+  ],
+  "cookie": [
+    "./assets/item/pb_ncream_cookie.png",
+    "./assets/item/lemon_poppy_cookie.png",
+    "./assets/item/original_cookie.png",
+    "./assets/item/cookie_butter_cookie.png",
+    "./assets/item/mint_choc_cookie.png",
+    "./assets/item/mnm_cookie.png"
   ]
 }
