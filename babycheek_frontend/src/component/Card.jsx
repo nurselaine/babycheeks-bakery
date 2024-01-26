@@ -1,4 +1,5 @@
 import React from "react";
+import './Card.css';
 
 // reposition cards
 // use sine for y coor
@@ -10,34 +11,21 @@ const get_coor = (radian_interval, radius) => {
   }
 }
 
-const Card = ({index, radius, center}) => {
+const Card = ({index, radius, center, isActive}) => {
+  const active = (index) % 6;
+  console.log("active & index", active, index);
   let radian_interval= (Math.PI / 3) * index;
   let coor = get_coor(radian_interval, radius);
-
   return (
     <div 
       style={{
-        ...styles.card, 
         left: `${center.x + coor.x}px`, 
         top: `${center.y + coor.y}px`
       }}
+      className={active !== index ? 'carousel-item-active' : 'carousel-item'}
+      id={`cardImage-${index}`}
     >{index}</div>
   )
-}
-
-const styles = {
-  card: {
-    margin: '0',
-    padding: '0',
-    position: 'absolute',
-    left: '50%',
-    top: '50%',
-    transform: 'translate(-50%, -50%)',
-    height: '220px',
-    width: '220px',
-    backgroundColor: 'blue',
-    borderRadius: '50%'
-  }
 }
 
 export default Card;

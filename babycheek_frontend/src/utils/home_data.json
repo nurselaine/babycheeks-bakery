@@ -1,0 +1,34 @@
+{
+  "bg": [
+    "./assets/bg/pb_ncream_bg.png",
+    "./assets/bg/lemon_poppy_bg.png",
+    "./assets/bg/original_bg.png",
+    "./assets/bg/cookie_butter_bg.png",
+    "./assets/bg/mint_choc_bg.png",
+    "./assets/bg/mnm_bg.png"
+  ],
+  "mbg": [
+    "./assets/mobile/pb_ncream_mbg.png",
+    "./assets/mobile/lemon_poppy_mbg.png",
+    "./assets/mobile/original_mbg.png",
+    "./assets/mobile/cookie_butter_mbg.png",
+    "./assets/mobile/mint_choc_mbg.png",
+    "./assets/mobile/mnm_mbg.png"
+  ],
+  "cookie_title": [
+    "Peanut Butter Cookies & Cream",
+    "Lemon Poppy Seed",
+    "Mild Chocolate Chip",
+    "Cookie Butter White Chip",
+    "Midnight Mint",
+    "Original with M&M's Candies"
+  ],
+  "cookie_description": [
+    "A smooth mix of chocolate and peanut butter, studded with the tasty crunch of cookies and cream bits",
+    "A zesty lemon cookie packed with poppy seeds, then stuffed with lemon filling and smothered in a lemon almond glaze",
+    "The classic - you cannot go wrong. Thick, soft, and packed with milk chocolate chips",
+    "A warm cookie butter cookie packed with cookie butter pieces and creamy white chips",
+    "A warm chocolate cookie filled with a classic mix of semi-sweet chocolate and mint chips",
+    "The tried and true cookie peppered with sweet and crispy M&M's candies"
+  ]
+}
