@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+// useSelector helps read store and its contents
+// useDispatch dispatches actions/action creators that return actions
 import "./Transaction.css";
-import data from "../../utils/home_data.json";
+import { addItem, deleteItem } from "../../Redux/actions/cartActions";
 
 const TransactionPane = ({item_img, title, desc, cost}) => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+
   const [parseCost, setparseCost] = useState('');
   const [largeScreen, setLargeScreen] = useState(false);
 
@@ -42,12 +48,16 @@ const TransactionPane = ({item_img, title, desc, cost}) => {
       { largeScreen && <p className="pane-price">${parseCost}</p>}
       </div>
       <div className="counter">
-        <button>+</button>
-        <input type='text' value={0} />
-        <button>-</button>
+        <button
+          onClick={() => dispatch(addItem())}
+        >+</button>
+        <input type='text' value={state.numOfItems} />
+        <button 
+          disabled={state.numOfItems > 0 ? false : true}
+          onClick={() => dispatch(deleteItem())}>-</button>
       </div>
     </div>
   );
 };
 
-export default TransactionPane;
+export default memo(TransactionPane);

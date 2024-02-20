@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { Provider } from "react-redux";
+import store from "./src/Redux/store";
 import App from "./src/App";
 import Checkout from "./src/Page/Checkout";
 
@@ -25,9 +27,11 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <PayPalScriptProvider options={initialOptions}>
-    <RouterProvider router={router} />
-  </PayPalScriptProvider>
+  <Provider store={store}>
+    <PayPalScriptProvider options={initialOptions}>
+      <RouterProvider router={router} />
+    </PayPalScriptProvider>
+  </Provider>
 )
 
 // react-dom is an entry point to the DOM (Document Object model) and server renderers for React
