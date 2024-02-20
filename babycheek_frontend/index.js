@@ -1,8 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import App from "./src/App";
 import Checkout from "./src/Page/Checkout";
+
+const initialOptions = {
+  "client-id": process.env.REACT_APP_PAYPAL_CLIENTID
+}
 
 const router = createBrowserRouter([
   {

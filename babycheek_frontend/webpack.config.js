@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require("path"); // built in node package handle file path in node project
+const webpack = require("webpack");
 
 module.exports = {
   entry: './index.js', // main file/entry of app
@@ -11,7 +12,7 @@ module.exports = {
   },
   target: 'web', // specifies where app will run
   devServer: { // specifies development server settings
-    port: '5000', // port app will run once started
+    port: '3000', // port app will run once started
     static: { // specifies directory webpack will use to serve static files
       directory: path.join(__dirname, 'public')
     },
@@ -39,6 +40,9 @@ module.exports = {
   plugins: [ // 
     new HtmlWebpackPlugin({ // will generate html files for bundles and tell webpack to use generated html file in public folder as template
       template: path.join(__dirname, 'public', 'index.html')
+    }),
+    new webpack.DefinePlugin({
+      process: {env: {}}
     })
   ]
 };

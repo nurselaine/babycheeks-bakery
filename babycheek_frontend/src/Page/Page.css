@@ -20,6 +20,8 @@
   background-position: left;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  display: flex;
+  align-items: center;
 }
 
 
