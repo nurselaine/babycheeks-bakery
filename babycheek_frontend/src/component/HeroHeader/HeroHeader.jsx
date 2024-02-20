@@ -6,6 +6,7 @@ import {
   useAnimation,
 } from "framer-motion";
 import "../../Page/Page.css";
+import { Link } from "react-router-dom";
 
 const HeroHeader = () => {
   const ref = useRef(null);
@@ -43,7 +44,9 @@ const HeroHeader = () => {
           <h4 className="header-description">
             Yummy yummy delicious cookie description lalalala.
           </h4>
-          <button className="order-btn">ORDER NOW</button>
+          <Link to='/checkout'>
+            <button className="order-btn">ORDER NOW</button>
+          </Link>
         </motion.div>
       </AnimatePresence>
     </div>

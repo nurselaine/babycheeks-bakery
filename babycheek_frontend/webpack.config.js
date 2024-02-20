@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require("path"); // built in node package handle file path in node project
-const webpack = require("webpack");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   entry: './index.js', // main file/entry of app
@@ -41,8 +41,6 @@ module.exports = {
     new HtmlWebpackPlugin({ // will generate html files for bundles and tell webpack to use generated html file in public folder as template
       template: path.join(__dirname, 'public', 'index.html')
     }),
-    new webpack.DefinePlugin({
-      process: {env: {}}
-    })
+    new Dotenv()
   ]
 };

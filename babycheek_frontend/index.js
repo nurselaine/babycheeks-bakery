@@ -6,8 +6,11 @@ import App from "./src/App";
 import Checkout from "./src/Page/Checkout";
 
 const initialOptions = {
-  "client-id": process.env.REACT_APP_PAYPAL_CLIENTID
+  "client-id": process.env.REACT_APP_PAYPAL_CLIENTID,
+  currency: "USD",
+  intent: "capture"
 }
+
 
 const router = createBrowserRouter([
   {
@@ -22,7 +25,9 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <RouterProvider router={router} />
+  <PayPalScriptProvider options={initialOptions}>
+    <RouterProvider router={router} />
+  </PayPalScriptProvider>
 )
 
 // react-dom is an entry point to the DOM (Document Object model) and server renderers for React

@@ -11,6 +11,7 @@ const App = () => {
   const handlePageChange = (number) => {
     setPage(number);
   };
+  console.log(process.env.REACT_APP_PAYPAL_CLIENTID);
 
   let cookies = [0, 1, 2, 3, 4, 5];
 
