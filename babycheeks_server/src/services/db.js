@@ -25,7 +25,6 @@ const getOneAdmin = async (id) => {
     // do ID validation before sending request
     const [rows] = await pool.query(`SELECT * FROM ADMIN_USER USER WHERE id=?`, id);
     // ? (prepared statement) sending sql request and values separately is to prevent sql injection attacks and increase security
-    // console.log(rows);
     return rows;
 }
 
@@ -37,7 +36,6 @@ const createAdminUser = async (employee_id, firstname, lastname) => {
 const deleteAdminUser = async (employee_id) => {
     await pool.query(`DELETE FROM ADMIN_USER WHERE employee_id=?`, employee_id);
 }
-// createAdminUser(1, 'Viet', 'Dinh');
-// deleteAdminUser(1)
+
 getAdminUsers();
 
