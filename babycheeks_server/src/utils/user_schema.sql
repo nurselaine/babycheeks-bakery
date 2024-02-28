@@ -16,4 +16,6 @@ VALUES
 (0000, 'Elaine', 'Huynh'),
 (0000, 'Bao', 'Dinh');
 
+
+
 -- using mysql on local dev env for simpler development
