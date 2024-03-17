@@ -4,4 +4,5 @@ CREATE TABLE MENU (
     description TEXT NOT NULL,
     cost decimal NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT NOw()
+    FOREIGN KEY (item_type_id) references ITEM_TYPE(id)
 );
