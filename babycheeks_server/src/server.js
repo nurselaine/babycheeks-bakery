@@ -5,6 +5,7 @@ const adminUser = require('./routes/admin_users');
 require('dotenv').config();
 
 const app = express();
+app.use(express.json());
 
 const PORT = 3001 || 3002;
 
