@@ -6,6 +6,8 @@ const router = express.Router();
 const pool = require('../services/db');
 
 // implement router for employee data to server to client side
+
+// ****************** ADMIN USERS **********************
 // gets all shop owners
 router.get('/getAdminUsers', async (req, res, next) => {
   try {
@@ -25,13 +27,6 @@ router.get('/getAdminUsers', async (req, res, next) => {
     });
   }
 });
-
-// const getAdminUsers = async () => {
-//   let res = await pool.query('SELECT * FROM ADMIN_USER');
-//   let rows = res[0];
-//   console.log(rows);
-//   return rows;
-// };
 
 // get one admin user
 router.get('/getAdminUser/:id', async (req, res, next) => {
@@ -55,13 +50,6 @@ router.get('/getAdminUser/:id', async (req, res, next) => {
   }
 });
 
-// const getOneAdmin = async (id) => {
-//   // do ID validation before sending request
-//   const [rows] = await pool.query(`SELECT * FROM ADMIN_USER USER WHERE id=?`, id);
-//   // ? (prepared statement) sending sql request and values separately is to prevent sql injection attacks and increase security
-//   return rows;
-// };
-
 router.post('/createAdminUser', async (req, res, next) => {
   try {
     console.log('BODY: ', req.body);
@@ -82,11 +70,6 @@ router.post('/createAdminUser', async (req, res, next) => {
     });
   }
 });
-
-// const createAdminUser = async (employee_id, firstname, lastname) => {
-//   await pool.query(`INSERT INTO ADMIN_USER (employee_id, firstname, lastname) VALUES
-//     (?, ?, ?)`, [employee_id, firstname, lastname]);
-// };
 
 router.delete('/removeAdminUser/:id', async (req, res, next) => {
   try {
@@ -175,11 +158,9 @@ router.get('/getUnfulfilled', async (req, res, next) => {
 router.get('/getCustomerOrder/:id', async (req, res, next) => {
   try {
     let order_id = req.params.id;
-    console.log(order_id);
     let [rows] = await pool.query(`SELECT * FROM CUSTOMER_ORDER WHERE id=?`, [order_id]);
-    console.log(rows);
     let items = await pool.query('SELECT * FROM ORDER_ITEM WHERE order_id=?', [order_id]);
-    console.log(items);
+
     res.status(200).send({
       orders: rows,
       items: items[0],
@@ -241,12 +222,89 @@ router.put('/updateOrderStatus/:id', async (req, res, next) => {
       timestamp: new Date(),
     });
   }
-})
+});
+
+// ********************* MENU ******************************
+
+// get all menu items
+router.get('/getMenu', async (req, res, next) => {
+  try {
+    let rows = await pool.query(`SELECT * FROM MENU`);
+    res.status(200).send({
+      items: rows[0],
+      message: 'SUCCESSFULLY RETREIVED MENU DATA',
+      timestamp: new Date(),
+    });
+  } catch (error) {
+    console.error('ERROR: Fetching menu information', error);
+    res.status(400).send({
+      message: 'GET MENU REQ: internal server error',
+      error,
+      timestamp: new Date(),
+    });
+  }
+});
 
 // add menu item
+router.post('/addToMenu', async (req, res, next) => {
+  try {
+    let {name, description, cost} = req.body;
+    await pool.query(`INSERT INTO MENU (name, description, cost) VALUES (?, ?, ?)`, [name, description, cost]);
+    res.status(200).send({
+      message: 'SUCCESSFULLY ADD NEW MENU ITEM',
+      timestamp: new Date(),
+    });
+  } catch (error) {
+    console.error('ERROR: adding new menu information', error);
+    res.status(400).send({
+      message: 'POST NEW MENU ITEM REQ: internal server error',
+      error,
+      timestamp: new Date(),
+    });
+  }
+});
 
 // update menu item
+router.put('/updateMenuItem/:id', async (req, res, next) => {
+  try {
+    let {name, description, cost} = req.body;
+    let id = req.params.id;
+    console.log(id);
+    await pool.query(`UPDATE MENU SET name = ?, description = ?, cost = ? WHERE id=?`, [name, description, cost, id]);
+    res.status(200).send({
+      message: 'SUCCESSFULLY UPDATED MENU ITEM',
+      timestamp: new Date(),
+    });
+  } catch (error) {
+    console.error('ERROR: updating menu information', error);
+    res.status(400).send({
+      message: 'PUT MENU ITEM REQ: internal server error',
+      error,
+      timestamp: new Date(),
+    });
+  }
+});
 
 // delete menu item
+router.delete('/deleteMenuItem/:id', async (req, res, next) => {
+  try {
+    let id = req.params.id;
+    console.log(id);
+    await pool.query(`DELETE FROM MENU WHERE id= ?`, id);
+    res.status(200).send({
+      message: 'SUCCESSFULLY UPDATED MENU ITEM',
+      timestamp: new Date(),
+    });
+  } catch (error) {
+    console.error('ERROR: deleting menu information', error);
+    res.status(400).send({
+      message: 'DELETE MENU ITEM REQ: internal server error',
+      error,
+      timestamp: new Date(),
+    });
+  }
+});
+
+// ?Synchronize data?
 
 module.exports = router;
