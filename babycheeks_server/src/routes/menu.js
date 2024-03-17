@@ -21,7 +21,7 @@ router.get('/title', async (req, res, next) => {
       timestamp: new Date(),
     });
   } catch (error) {
-    console.error('Error requesting all menu items', error);
+    console.error('Error requesting all menu name items', error);
     res.status(400).send({
       message: 'internal server error',
       timestamp: new Date(),
@@ -42,11 +42,11 @@ router.get('/description', async (req, res, next) => {
 
     res.status(200).send({
       items: desc,
-      message: 'Cookies retrieved successfully.',
+      message: 'Cookie Descriptions retrieved successfully.',
       timestamp: new Date(),
     });
   } catch (error) {
-    console.error('Error requesting all menu items', error);
+    console.error('Error requesting all menu descriptions items', error);
     res.status(400).send({
       message: 'internal server error',
       timestamp: new Date(),
@@ -66,11 +66,11 @@ router.get('/brand', async (req, res, next) => {
 
     res.status(200).send({
       items: brandname,
-      message: 'Cookies retrieved successfully.',
+      message: 'Shop Information retrieved successfully.',
       timestamp: new Date(),
     });
   } catch (error) {
-    console.error('Error requesting all menu items', error);
+    console.error('Error requesting all shop items', error);
     res.status(400).send({
       message: 'internal server error',
       timestamp: new Date(),
