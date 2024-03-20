@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const logger = require('./middlewares/logger');
 const CMS = require('./routes/menu');
 const DB = require('./routes/dbRoute');
@@ -7,8 +8,7 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.json());
-// host static files
-app.use(express.static('client'));
+app.use(cors());
 
 const PORT = process.env.PORT || 3002;
 

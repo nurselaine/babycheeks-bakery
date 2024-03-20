@@ -7,7 +7,8 @@ const {  handleResponse, createOrder, captureOrder } = paypal;
 
 router.post('/api/orders', async (req, res, next) => {
   try {
-    const { cart } = req.body;
+    console.log('REQ BODY: ' + req.body);
+    const cart = req.body;
     const { jsonResponse, httpStatusCode } = await createOrder(cart);
     res.status(httpStatusCode).json(jsonResponse);
   } catch (error) {
@@ -17,9 +18,11 @@ router.post('/api/orders', async (req, res, next) => {
 });
 
 router.post('/api/orders/:orderID/capture', async (req, res) => {
+  console.log('HELLO CAPTURE ORDER');
   try {
-    const { orderID } = req.param;
-    const { jsonResponse, httpStatusCode } = await captureOrder(orderID);
+    const orderID = req.params;
+    console.log('ID: ' + orderID);
+    const { jsonResponse, httpStatusCode } = await captureOrder(orderID.orderID);
     res.status(httpStatusCode).json(jsonResponse);
   } catch (error) {
     console.error('ERROR: capture order failed', error);

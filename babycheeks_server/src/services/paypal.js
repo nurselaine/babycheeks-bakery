@@ -47,6 +47,7 @@ const createOrder = async (cart) => {
     cart,
   );
   const accessToken = await generateAccessToken();
+  console.log('Access token: ', accessToken);
   const url = `${PAYPAL_BASE_URL}/v2/checkout/orders`;
   const payload = {
     intent: 'CAPTURE',
@@ -54,11 +55,13 @@ const createOrder = async (cart) => {
       {
         amount: {
           currency_code: 'USD',
-          value: cart.product.cost,
+          value: cart. purchase_units[0].amount.value,
+          // value: cart.product.cost,
         },
       },
     ],
   };
+  // purchase_units[0].amount.value
   const response = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -82,7 +85,9 @@ const createOrder = async (cart) => {
 // capture order - move money from payer to merchant
 const captureOrder = async (orderID) => {
   console.log('CAPTURE ORDER, orderID: ', orderID);
+
   const accessToken = await generateAccessToken();
+  console.log('Generated access token', accessToken);
   const url = `${PAYPAL_BASE_URL}/v2/checkout/orders/${orderID}/capture`;
 
   const response = await fetch(url, {
@@ -93,6 +98,7 @@ const captureOrder = async (orderID) => {
     },
   });
   // response will contain status: complete, order ID and info, payment status complete and seller info
+  return handleResponse(response);
 };
 
 module.exports = {
