@@ -1,17 +1,21 @@
 const express = require('express');
 const logger = require('./middlewares/logger');
 const CMS = require('./routes/menu');
-const adminUser = require('./routes/admin_users');
+const DB = require('./routes/dbRoute');
+const PAYPAL = require('./routes/paypalRoute');
 require('dotenv').config();
 
 const app = express();
 app.use(express.json());
+// host static files
+app.use(express.static('client'));
 
-const PORT = 3001 || 3002;
+const PORT = process.env.PORT || 3002;
 
 app.use(logger);
 app.use('/menu', CMS);
-app.use('/db', adminUser);
+app.use('/db', DB);
+app.use('/pay', PAYPAL);
 
 app.use('/request-type', logger, (req, res, next) => {
   console.log(Date.now());
