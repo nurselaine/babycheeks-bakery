@@ -3,6 +3,7 @@ import LandingLayout from "../Layout/LandingLayout";
 import TransactionPane from "../component/transaction/TransactionPane";
 import data from "../utils/home_data.json";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import PayPalPayment from "../component/PaypalPayment";
 import "./Page.css";
 
 const Checkout = () => {
@@ -28,6 +29,8 @@ const Checkout = () => {
   };
   const cookies = [0, 1, 2, 3, 4, 5];
   const [cost] = useState([5.4, 4.75, 8.99, 4.45, 5, 6.54]);
+
+  console.log('REACT APP CLIENT ID:::::::::::::::::::', process.env.REACT_APP_PAYPAL_CLIENTID);
   return (
     <LandingLayout>
       <div className="checkout-page">
@@ -43,11 +46,12 @@ const Checkout = () => {
           ))}
         </div>
         <button className="submitOrder-btn">Submit Order</button>
-        <PayPalButtons
+        <PayPalPayment />
+        {/* <PayPalButtons
           style={{ layout: "vertical" }}
           createOrder={(data, actions) => onCreateOrder(data, actions)}
           onApprove={(data, actions) => onApproveOrder(data, actions)}
-        />
+        /> */}
       </div>
     </LandingLayout>
   );

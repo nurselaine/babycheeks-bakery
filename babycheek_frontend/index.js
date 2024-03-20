@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import store from "./src/Redux/store";
 import App from "./src/App";
 import Checkout from "./src/Page/Checkout";
-
 const initialOptions = {
   "client-id": process.env.REACT_APP_PAYPAL_CLIENTID,
   currency: "USD",
