@@ -138,10 +138,13 @@ const PayPalPayment = () => {
     }
   };
   return (
-    <PayPalButtons
-      createOrder={() => createOrder()}
-      onApprove={(data, actions) => onApprove(data, actions)}
-    />
+    <div className="paypal-ctn">
+        <PayPalButtons
+          createOrder={() => createOrder()}
+          onApprove={(data, actions) => onApprove(data, actions)}
+    
+        />
+    </div>
   );
 };
 

@@ -96,6 +96,11 @@
   transition: 0.5s;
 }
 
+.paypal-ctn {
+  width: 300px;
+  
+}
+
 @media only screen and (max-width: 600px) {
   .pane-img {
     margin: 0px 10px;
