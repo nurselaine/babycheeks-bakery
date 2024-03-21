@@ -23,7 +23,6 @@
   height: 120px;
   margin: 10px 20px;
   border: 1px solid var(--color-light-shade);
-
 }
 
 .transactionPane {
@@ -36,13 +35,19 @@
   align-items: center;
   position: relative;
   background-color: var(--color-empty-shade);
-}
-
-.pane-content {
   font-family: 'Bebas Neue', sans-serif;
+}
+.content-ctn {
+  margin: 0 15px;
+}
+.pane-content {
   font-weight: bold;
   letter-spacing: 1px;
-  width: 300px;
+  width: fit-content;
+}
+
+.pane-content p:first-child{
+  margin: 5px 0;
 }
 
 .pane-content p:nth-child(2) {
@@ -50,6 +55,7 @@
   font-family: sans-serif;
   font-size: 14px;
   letter-spacing: 1px;
+  margin: 5px 0;
 }
 
 .pane-price {
@@ -58,36 +64,37 @@
   font-weight: bold;
 }
 
-.counter {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  position: absolute;
-  right: 0;
-  align-items: center;
-  justify-content: center;
-  margin: 20px;
+.pane-counter {
+  height: 25px;
+  margin: 5px 0px;
 }
 
-.counter input {
-  margin-left: auto;
-  width: 50px;
-  height: 20px;
-  text-align: center;
-  margin: 4px;
+.pane-counter input {
+  text-align:center;
+  width: 40px;
+  height: -webkit-fill-available;
+  border-style: solid;
+  border-width: medium;
+  border-color: black;
 }
 
-.counter button {
+.pane-counter button {
   width: 30px;
-  height:30px;
+  height: 100%;
   color: lightgray;
   background-color: black;
   border: none;
   box-shadow: 0px 0px 45px 0px rgba(150,150,150,0.5);
   font-family: sans-serif;
   font-weight: bold;
-  border-radius: 4px;
   padding: 5px;
+}
+
+.pane-counter button:first-child{
+  border-radius: 4px 0 0 4px;
+}
+.pane-counter button:last-child{
+  border-radius: 0 4px 4px 0;
 }
 
 .counter button:hover {
@@ -105,6 +112,10 @@
   .pane-img {
     margin: 0px 10px;
     height: 90px;
+  }
+
+  .pane-content {
+    margin: 20px 15px;
   }
   .pane-content p:nth-child(2) {
     font-family: sans-serif;
