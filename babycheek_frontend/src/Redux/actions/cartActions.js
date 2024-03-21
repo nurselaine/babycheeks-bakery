@@ -1,4 +1,4 @@
-import { ADD_ITEM, DELETE_ITEM } from "../actionTypes/actionTypes";
+import { ADD_ITEM, DELETE_ITEM, UPDATE_ITEM } from "../actionTypes/actionTypes";
 
 // created two action creators aka pure js functions that returns
 // action object with specific type
@@ -18,4 +18,11 @@ const deleteItem = () => {
   }
 };
 
-export { addItem, deleteItem };
+const updateItem = (count) => {
+  return {
+    type: UPDATE_ITEM,
+    value: count,
+  }
+}
+
+export { addItem, deleteItem, updateItem };

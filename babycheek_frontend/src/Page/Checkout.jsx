@@ -7,6 +7,8 @@ import "./Page.css";
 
 const Checkout = () => {
 
+  let [submitOrder, setSubmitOrder] = useState(false);
+
   const cookies = [0, 1, 2, 3, 4, 5];
   const [cost] = useState([5.4, 4.75, 8.99, 4.45, 5, 6.54]);
 
@@ -25,8 +27,8 @@ const Checkout = () => {
           ))}
         </div>
         <div className="submit-ctn">
-          <button className="submitOrder-btn">Submit Order</button>
-          <PayPalPayment />
+          <button className="submitOrder-btn" onClick={() => setSubmitOrder(true)}>Submit Order</button>
+          {submitOrder && <PayPalPayment />}
         </div>
       </div>
     </LandingLayout>

@@ -19,7 +19,7 @@
 }
 
 .pane-img {
-  width: 120px;
+  width: auto;
   height: 120px;
   margin: 10px 20px;
   border: 1px solid var(--color-light-shade);
@@ -98,12 +98,13 @@
 
 .paypal-ctn {
   width: 300px;
-  
+
 }
 
 @media only screen and (max-width: 600px) {
   .pane-img {
     margin: 0px 10px;
+    height: 90px;
   }
   .pane-content p:nth-child(2) {
     font-family: sans-serif;
