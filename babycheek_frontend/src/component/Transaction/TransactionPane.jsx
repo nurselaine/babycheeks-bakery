@@ -51,7 +51,7 @@ const TransactionPane = ({item_img, title, desc, cost}) => {
         <button
           onClick={() => dispatch(addItem())}
         >+</button>
-        <input type='text' value={state.numOfItems} />
+        <input type='text' value={state.numOfItems} onChange={""} />
         <button 
           disabled={state.numOfItems > 0 ? false : true}
           onClick={() => dispatch(deleteItem())}>-</button>

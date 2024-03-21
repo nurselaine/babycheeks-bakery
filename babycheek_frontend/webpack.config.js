@@ -38,9 +38,9 @@ module.exports = {
     ],
   },
   plugins: [ // 
+    new Dotenv(),
     new HtmlWebpackPlugin({ // will generate html files for bundles and tell webpack to use generated html file in public folder as template
       template: path.join(__dirname, 'public', 'index.html')
-    }),
-    new Dotenv()
+    })
   ]
 };

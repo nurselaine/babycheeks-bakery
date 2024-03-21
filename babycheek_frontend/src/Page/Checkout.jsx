@@ -30,7 +30,6 @@ const Checkout = () => {
   const cookies = [0, 1, 2, 3, 4, 5];
   const [cost] = useState([5.4, 4.75, 8.99, 4.45, 5, 6.54]);
 
-  console.log('REACT APP CLIENT ID:::::::::::::::::::', process.env.REACT_APP_PAYPAL_CLIENTID);
   return (
     <LandingLayout>
       <div className="checkout-page">

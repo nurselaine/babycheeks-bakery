@@ -11,11 +11,9 @@ const App = () => {
   const handlePageChange = (number) => {
     setPage(number);
   };
-  console.log(process.env.REACT_APP_PAYPAL_CLIENTID);
+  console.log('PROCESs:::::::::::::',process.env.PAYPAL_CLIENT_ID);
 
   let cookies = [0, 1, 2, 3, 4, 5];
-  console.log('CLIENT ID::::::::::::', process.env.REACT_APP_PAYPAL_CLIENTID);
-
   return (
     <div id="App">
       <LandingLayout>

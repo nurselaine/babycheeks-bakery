@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 
 const PayPalPayment = () => {
+  let [orderApproved, setOrderApproved] = useState(false);
   const createOrder = async () => {
     // This function sets up the details of the transaction, including the amount and line item details.
     try {
@@ -16,23 +17,23 @@ const PayPalPayment = () => {
             {
               amount: {
                 currency_code: "USD",
-                value: "100",
+                value: "2",
                 breakdown: {
                   item_total: {
                     /* Required when including the items array */
                     currency_code: "USD",
-                    value: "100",
+                    value: "2",
                   },
                 },
               },
               items: [
                 {
-                  name: "First Product Name" /* Shows within upper-right dropdown during payment approval */,
+                  name: "Original Chocolate Chip cookie" /* Shows within upper-right dropdown during payment approval */,
                   description:
-                    "Optional descriptive text.." /* Item details will also be in the completed paypal.com transaction view */,
+                    "Original Chocolate Chip cookie" /* Item details will also be in the completed paypal.com transaction view */,
                   unit_amount: {
                     currency_code: "USD",
-                    value: "50",
+                    value: "1",
                   },
                   quantity: "2",
                 },
@@ -98,6 +99,7 @@ const PayPalPayment = () => {
         .then((details) => {
           // This function shows a transaction success message to your buyer.
           alert("Transaction completed by " + details.payer.name.given_name);
+          setOrderApproved(true);
         });
 
       const orderData = await response.json();
