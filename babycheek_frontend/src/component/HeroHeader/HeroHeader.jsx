@@ -5,13 +5,15 @@ import {
   useInView,
   useAnimation,
 } from "framer-motion";
-import "../../Page/Page.css";
+import "./Header.css";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const HeroHeader = () => {
+const HeroHeader = ({item_id}) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const mainControls = useAnimation();
+  const itemData = useSelector(state => state.menuItems.find(item => item.item_id === item_id));
 
   useEffect(() => {
     if (isInView) {
@@ -20,7 +22,7 @@ const HeroHeader = () => {
   }, [isInView]);
 
   return (
-    <div ref={ref}>
+    <div ref={ref} className="menu_header">
       <AnimatePresence mode={"wait"}>
         <motion.div
           variants={{
@@ -40,9 +42,9 @@ const HeroHeader = () => {
             delay: 0.25,
           }}
         >
-          <h1 className="header-title">Cookie Name</h1>
+          <h1 className="header-title">{itemData.item_name}</h1>
           <h4 className="header-description">
-            Yummy yummy delicious cookie description lalalala.
+            {itemData.item_description}
           </h4>
           <Link to='/checkout'>
             <button className="order-btn">ORDER NOW</button>

@@ -9,17 +9,13 @@ import {
   updateItem,
 } from "../../Redux/actions/cartActions";
 
-const TransactionPane = ({ item_img, title, desc, cost }) => {
-  let numOfItems = useSelector((state) => state.numOfItems);
+const TransactionPane = ({ item_id }) => {
   const dispatch = useDispatch();
 
-  const [parseCost, setparseCost] = useState("");
   const [largeScreen, setLargeScreen] = useState(false);
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    setparseCost(cost.toFixed(2));
-  }, []);
+  
+  const itemData = useSelector(state => state.menuItems.find(item => item.item_id === item_id));
+  const itemCounter = useSelector(state => state.item_counter.find(index => index.item_id === item_id));
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,58 +32,37 @@ const TransactionPane = ({ item_img, title, desc, cost }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, [largeScreen, window.innerHeight]);
 
-  const countHandlerIncrement = () => {
-    setCount(count + 1);
-  };
-
   const userInputHandler = (e) => {
     let value = e.target.value;
     if (value > 24) {
       alert("Please call for orders greater than 24 cookies");
       return;
     }
-    dispatch(updateItem(value));
-    setCount(value);
+    dispatch(updateItem(value, itemData.item_id));
   };
 
   return (
     <div className="transactionPane">
       <div>
-        <img src={item_img} alt={title} className="pane-img" />
+        <img src={itemData.item_assets.cookie} alt={itemData.item_name} className="pane-img" />
       </div>
       <div className="content-ctn">
         <div className="pane-content">
-          <p>{title}</p>
-          {largeScreen ? <p className="">{desc}</p> : <p>${parseCost}</p>}
+          <p>{itemData.item_name}</p>
+          {largeScreen ? <p className="">{itemData.item_description}</p> : <p>${itemData.pricing.single.toFixed(2)}</p>}
           <div className="pane-counter">
-            <button onClick={() => dispatch(addItem())}>+</button>
-            <input value={numOfItems} onChange={(e) => userInputHandler(e)} />
+            <button onClick={() => dispatch(addItem(itemData.item_id))}>+</button>
+            <input value={itemCounter.counter} onChange={(e) => userInputHandler(e)} />
             <button
-              disabled={numOfItems > 0 ? false : true}
-              onClick={() => dispatch(deleteItem())}
+              disabled={itemCounter.counter > 0 ? false : true}
+              onClick={() => dispatch(deleteItem(itemData.item_id))}
             >
               -
             </button>
           </div>
-          {largeScreen && <p className="pane-price">${parseCost}</p>}
+          {largeScreen && <p className="pane-price">${itemData.pricing.single.toFixed(2)}</p>}
         </div>
       </div>
-      {/* <img src={item_img} alt={title} className="pane-img" />
-      <div className="pane-content">
-        <p>{title}</p>
-        {largeScreen ? <p>{desc}</p> : <p>${parseCost}</p>}
-        {largeScreen && <p className="pane-price">${parseCost}</p>}
-      </div>
-      <div className="counter">
-        <button onClick={() => dispatch(addItem())}>+</button>
-        <input type="text" value={state.numOfItems} onChange={() => ""} />
-        <button
-          disabled={state.numOfItems > 0 ? false : true}
-          onClick={() => dispatch(deleteItem())}
-        >
-          -
-        </button>
-      </div> */}
     </div>
   );
 };

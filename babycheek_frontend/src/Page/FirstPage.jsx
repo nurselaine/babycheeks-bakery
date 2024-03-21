@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import './Page.css';
 import HeroHeader from "../component/HeroHeader/HeroHeader";
 
-const FirstPage = ({ bg_image, mbg_image }) => {
+const FirstPage = ({ bg_image, mbg_image, item_id }) => {
   const [largeScreen, setLargeScreen] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const FirstPage = ({ bg_image, mbg_image }) => {
   return (
     <div className="background" style={{backgroundImage: `url(${largeScreen ? bg_image : mbg_image})`}}>
       <section className="header">
-      <HeroHeader />
+      <HeroHeader item_id={item_id} />
       </section>
     </div>
   )

@@ -1,0 +1,35 @@
+.menu_header {
+  margin-left: 30px;
+}
+
+.header {
+  padding: 50px 20px;
+  font-family: 'Bebas Neue', sans-serif;
+  width: 70%;
+}
+
+.header-title {
+  font-size: 5em;
+}
+
+.header-description {
+  width: 70%;
+  font-size: 2em;
+  letter-spacing: 7px;
+}
+
+@media only screen and (max-width: 600px) {
+  .menu_header {
+    margin-left: 20px;
+  }
+
+  .header {
+    padding: 25px 15px;
+  }
+  
+  .header-description {
+    width: 100%;
+    font-size: 1em;
+    letter-spacing: 2px;
+  }
+}

@@ -15,6 +15,14 @@
     "./assets/mobile/mint_choc_mbg.png",
     "./assets/mobile/mnm_mbg.png"
   ],
+  "cookie_id": [0, 1, 2, 3, 4, 5],
+  "item_pricing": [
+    {"single": 5.40, "half_dozen": 18.50, "dozen": 28.00},
+    {"single": 4.75, "half_dozen": 18.50, "dozen": 28.00},
+    {"single": 4.00, "half_dozen": 18.50, "dozen": 28.00},
+    {"single": 4.45, "half_dozen": 18.50, "dozen": 28.00},
+    {"single": 5.00, "half_dozen": 18.50, "dozen": 28.00},
+    {"single": 4.25, "half_dozen": 18.50, "dozen": 28.00}],
   "cookie_title": [
     "Peanut Butter Cookies & Cream",
     "Lemon Poppy Seed",

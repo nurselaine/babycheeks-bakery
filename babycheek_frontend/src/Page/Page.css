@@ -25,23 +25,6 @@
   align-items: center;
 }
 
-
-.header {
-  padding: 50px 20px;
-  font-family: 'Bebas Neue', sans-serif;
-  width: 70%;
-}
-
-.header-title {
-  font-size: 10em;
-}
-
-.header-description {
-  width: 70%;
-  font-size: 2em;
-  letter-spacing: 7px;
-}
-
 .order-btn {
   margin-top: 20px;
   color: lightgray;
@@ -113,14 +96,6 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .header-title {
-    font-size: 7em;
-  }
-
-  .header-description {
-    font-size: 1em;
-    letter-spacing: 2px;
-  }
 
   .store-items {
     width: 80%;
