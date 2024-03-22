@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import "./Transaction_styles.css";
 import { useSelector, useDispatch } from "react-redux";
-import { updateOrderID } from "../../Redux/actions/cartActions";
+import { processOrder, updateOrderID } from "../../Redux/actions/cartActions";
 
 const PayPalPayment = () => {
   let [orderApproved, setOrderApproved] = useState(false);
@@ -61,6 +61,8 @@ const PayPalPayment = () => {
       console.log("CONFIRMATION ORDER ", JSON.stringify(orderData));
 
       const errorDetail = orderData?.details?.[0];
+
+      dispatch(processOrder());
 
       if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
         // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()

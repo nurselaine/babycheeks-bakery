@@ -104,6 +104,15 @@
   cursor: pointer;
 }
 
+.confirmation-ctn {
+  display: "flex";
+  flex-direction: "column";
+  align-items: "center";
+  line-height: "2rem";
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+}
+
 @media only screen and (max-width: 600px) {
 
   .store-items {
@@ -114,5 +123,9 @@
     width: 200px;
     font-size: 15px;
     padding: 15px;
+  }
+  
+  .confirmation-ctn{
+    font-size: 1.5em;
   }
 }
