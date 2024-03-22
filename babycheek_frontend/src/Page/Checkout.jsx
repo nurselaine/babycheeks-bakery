@@ -11,14 +11,14 @@ const Checkout = () => {
   let [submitOrder, setSubmitOrder] = useState(false);
   let menuItems = useSelector(state => state.menuItems);
   const dispatch = useDispatch();
-  const shoppingcart = useSelector(state => state.shoppingcart);
-  console.log("SHOPPING CART:::::",shoppingcart);
-
+  const shoppingcart = useSelector(state => state.shopping_cart);
+  
   const handleOrderSubmit = () => {
     setSubmitOrder(true);
     dispatch(loadCart());
   }
-
+  
+  console.log("SHOPPING CART:::::",shoppingcart);
   return (
     <LandingLayout>
       <div className="checkout-page">

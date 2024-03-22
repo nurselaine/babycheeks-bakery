@@ -1,6 +1,6 @@
 import { ADD_ITEM, DELETE_ITEM, UPDATE_ITEM, LOAD_CART } from "../actionTypes/actionTypes";
 
-const initialState = {
+export const initialState = {
   menuItems: [
     {
       item_id: 0,
@@ -144,9 +144,9 @@ const cartReducer = (state = initialState, action) => {
         }));
 
         const cartTotal = shoppingCartItems.reduce((total, item) => {
-          return total + item.quantity * item.price
-        });
-
+          return total + (item.quantity * item.price);
+        }, 0);
+        
         return {
           ...state,
           shopping_cart: {
