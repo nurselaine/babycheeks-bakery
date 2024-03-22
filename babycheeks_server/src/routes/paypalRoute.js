@@ -9,6 +9,8 @@ router.post('/api/orders', async (req, res, next) => {
   try {
     console.log('REQ BODY: ' + req.body);
     const cart = req.body;
+
+    console.log('REQ BODY OF CART: ' + JSON.stringify(cart));
     const { jsonResponse, httpStatusCode } = await createOrder(cart);
     res.status(httpStatusCode).json(jsonResponse);
   } catch (error) {

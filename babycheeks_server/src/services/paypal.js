@@ -44,8 +44,11 @@ const createOrder = async (cart) => {
   // use the cart information passed from the front-end to calculate the purchase unit details
   console.log(
     'shopping cart information passed from the frontend createOrder() callback:',
-    cart,
+    JSON.stringify(cart),
   );
+
+  let total = cart.total.toFixed(2);
+  console.log('TOTAL: ', total);
   const accessToken = await generateAccessToken();
   console.log('Access token: ', accessToken);
   const url = `${PAYPAL_BASE_URL}/v2/checkout/orders`;
@@ -55,13 +58,14 @@ const createOrder = async (cart) => {
       {
         amount: {
           currency_code: 'USD',
-          value: cart. purchase_units[0].amount.value,
-          // value: cart.product.cost,
+          value: cart.total.toFixed(2),
         },
       },
     ],
   };
-  // purchase_units[0].amount.value
+
+  console.log('PAYLOAD', payload);
+
   const response = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -71,15 +75,6 @@ const createOrder = async (cart) => {
     body: JSON.stringify(payload),
   });
   return handleResponse(response);
-  // example response
-  /**
-   * "processor_response": {
-    "avs_code": "Y",
-    "cvv_code": "S",
-    "payment_advice_code": "",
-    "response_code": "0000"
-    }
-  */
 };
 
 // capture order - move money from payer to merchant
