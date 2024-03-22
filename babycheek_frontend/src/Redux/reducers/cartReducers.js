@@ -1,4 +1,4 @@
-import { ADD_ITEM, DELETE_ITEM, UPDATE_ITEM, LOAD_CART } from "../actionTypes/actionTypes";
+import { ADD_ITEM, DELETE_ITEM, UPDATE_ITEM, LOAD_CART, PROCESS_ORDER } from "../actionTypes/actionTypes";
 
 export const initialState = {
   menuItems: [
@@ -110,7 +110,8 @@ export const initialState = {
     {item_id: 3, counter: 0},
     {item_id: 4, counter: 0},
     {item_id: 5, counter: 0},
-  ]
+  ],
+  active_order: false,
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -125,8 +126,8 @@ const cartReducer = (state = initialState, action) => {
     case DELETE_ITEM:
       return {
         ...state,
-        item_counter: state.item_counter.map((count, index) => 
-        index === action.item_id ? count - 1 : count),
+        item_counter: state.item_counter.map((item) => 
+        item.item_id === action.item_id ? {...item, counter: item.counter - 1} : item)
       };
     case UPDATE_ITEM:
       return {
@@ -146,14 +147,19 @@ const cartReducer = (state = initialState, action) => {
         const cartTotal = shoppingCartItems.reduce((total, item) => {
           return total + (item.quantity * item.price);
         }, 0);
-        
+
         return {
           ...state,
           shopping_cart: {
             menu_item: shoppingCartItems,
             total: cartTotal,
           }
-        }
+        };
+        case PROCESS_ORDER: 
+        return {
+          ...state,
+          active_order: !state.active_order,
+        };
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import { ADD_ITEM, DELETE_ITEM, UPDATE_ITEM, LOAD_CART } from "../actionTypes/actionTypes";
+import { ADD_ITEM, DELETE_ITEM, UPDATE_ITEM, LOAD_CART, PROCESS_ORDER } from "../actionTypes/actionTypes";
 
 // created two action creators aka pure js functions that returns
 // action object with specific type
@@ -34,4 +34,10 @@ const loadCart = () => {
   }
 }
 
-export { addItem, deleteItem, updateItem, loadCart };
+const processOrder = () => {
+  return {
+    type: PROCESS_ORDER,
+  }
+}
+
+export { addItem, deleteItem, updateItem, loadCart, processOrder };
