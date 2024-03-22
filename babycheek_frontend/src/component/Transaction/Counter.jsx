@@ -1,13 +1,13 @@
 import React from "react";
-import "./Transaction.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addItem,
   deleteItem,
   updateItem,
 } from "../../Redux/actions/cartActions";
+import "./Transaction_styles.css";
 
-const TransactionCounter = ({item_id}) => {
+const Counter = ({item_id}) => {
 
   const dispatch = useDispatch();
   const itemData = useSelector(state => state.menuItems.find(item => item.item_id === item_id));
@@ -38,4 +38,4 @@ const TransactionCounter = ({item_id}) => {
   );
 };
 
-export default TransactionCounter;
+export default Counter;

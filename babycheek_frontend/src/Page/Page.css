@@ -30,7 +30,7 @@
   color: lightgray;
   background-color: black;
   border-radius: 35px;
-  padding: 20px 30px;
+  padding: 15px;
   border: none;
   box-shadow: 0px 0px 45px 0px rgba(150,150,150,0.5);
   font-family: sans-serif;
@@ -70,7 +70,7 @@
   color: lightgray;
   background-color: black;
   border-radius: 35px;
-  padding: 20px 30px;
+  padding: 10px 30px;
   font-size: 20px;
   font-weight: bolder;
   letter-spacing: 2px;
@@ -95,6 +95,15 @@
   flex-direction: column;
 }
 
+.customer_form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-family: 'Bebas Neue', sans-serif;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 600px) {
 
   .store-items {
@@ -104,5 +113,6 @@
   .submitOrder-btn {
     width: 200px;
     font-size: 15px;
+    padding: 15px;
   }
 }

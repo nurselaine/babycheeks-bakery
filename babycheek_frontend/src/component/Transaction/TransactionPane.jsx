@@ -1,9 +1,9 @@
 import React, { useEffect, useState, memo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // useSelector helps read store and its contents
 // useDispatch dispatches actions/action creators that return actions
-import "./Transaction.css";
-import TransactionCounter from "./TransactionCounter";
+import Counter from "./Counter";
+import "./Transaction_styles.css";
 
 const TransactionPane = ({ item_id }) => {
 
@@ -35,7 +35,7 @@ const TransactionPane = ({ item_id }) => {
         <div className="pane-content">
           <p>{itemData.item_name}</p>
           {largeScreen ? <p className="">{itemData.item_description}</p> : <p>${itemData.pricing.single.toFixed(2)}</p>}
-          <TransactionCounter item_id={item_id} />
+          <Counter item_id={item_id} />
           {largeScreen && <p className="pane-price">${itemData.pricing.single.toFixed(2)}</p>}
         </div>
       </div>

@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
+import "./Transaction_styles.css";
+import { useSelector, useDispatch } from "react-redux";
+import { updateOrderID } from "../../Redux/actions/cartActions";
 
 const PayPalPayment = () => {
   let [orderApproved, setOrderApproved] = useState(false);
+  const shopping_cart = useSelector(state => state.shopping_cart);
+  const orderID = useSelector(state => state.orderID);
+  const dispatch = useDispatch();
+
   const createOrder = async () => {
     // This function sets up the details of the transaction, including the amount and line item details.
     try {
@@ -11,52 +18,7 @@ const PayPalPayment = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          // purchase_units[0].amount.value
-          purchase_units: [
-            {
-              amount: {
-                currency_code: "USD",
-                value: "2",
-                breakdown: {
-                  item_total: {
-                    /* Required when including the items array */
-                    currency_code: "USD",
-                    value: "2",
-                  },
-                },
-              },
-              items: [
-                {
-                  name: "Original Chocolate Chip cookie" /* Shows within upper-right dropdown during payment approval */,
-                  description:
-                    "Original Chocolate Chip cookie" /* Item details will also be in the completed paypal.com transaction view */,
-                  unit_amount: {
-                    currency_code: "USD",
-                    value: "1",
-                  },
-                  quantity: "2",
-                },
-              ],
-            },
-          ],
-
-          // product: [
-          //   {
-          //     name: "Original Chocolate Chip cookie",
-          //     cost: "3.75",
-          //   },
-          // ],
-          // purchase_units: [
-          //   {
-          //     reference_id: "default",
-          //     amount: {
-          //       value: "3.75",
-          //       currency_code: "USD"
-          //     }
-          //   }
-          // ]
-        }),
+        body: JSON.stringify(shopping_cart),
       });
 
       console.log("ORDER SENT TO SERVER");
@@ -74,7 +36,6 @@ const PayPalPayment = () => {
 
         throw new Error(errorMessage);
       }
-      console.log("ORDER ID::::::::::", orderData.id);
       return orderData.id;
     } catch (error) {
       console.error(error);
@@ -84,9 +45,8 @@ const PayPalPayment = () => {
 
   const onApprove = async (data, actions) => {
     try {
-      console.log("APPROVE ORDER::::::: " + data);
       const orderID = data.orderID;
-      const response = fetch(
+      const response = await fetch(
         `http://localhost:3001/pay/api/orders/${orderID}/capture`,
         {
           method: "POST",
@@ -94,15 +54,11 @@ const PayPalPayment = () => {
             orderID: orderID,
           }),
         }
-      )
-        .then((response) => response.json())
-        .then((details) => {
-          // This function shows a transaction success message to your buyer.
-          alert("Transaction completed by " + details.payer.name.given_name);
-          setOrderApproved(true);
-        });
+      );
 
       const orderData = await response.json();
+
+      console.log("CONFIRMATION ORDER ", JSON.stringify(orderData));
 
       const errorDetail = orderData?.details?.[0];
 
@@ -121,9 +77,8 @@ const PayPalPayment = () => {
         const transaction =
           orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||
           orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];
-        resultMessage(
-          `Transaction ${transaction.status}: ${transaction.id}<br><br>See console for all available details`
-        );
+        
+        dispatch(updateOrderID(orderData?.id));
         console.log(
           "Capture result",
           orderData,

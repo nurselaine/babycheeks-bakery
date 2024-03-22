@@ -1,0 +1,19 @@
+.receipt_ctn {
+  background-color: var(--color-empty-shade);
+  border: lightgray;
+  padding:20px;
+  margin-bottom: 20px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: lighter;
+}
+
+.receipt_ctn p:first-child {
+  text-align: center;
+  font-family: inherit;
+}
+
+.receipt_items {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}

@@ -1,4 +1,12 @@
-import { ADD_ITEM, DELETE_ITEM, UPDATE_ITEM, LOAD_CART, PROCESS_ORDER } from "../actionTypes/actionTypes";
+import {
+  ADD_ITEM,
+  DELETE_ITEM,
+  UPDATE_ITEM,
+  LOAD_CART,
+  PROCESS_ORDER,
+  ADD_CUSTOMER_INFO,
+  UPDATE_ORDER_ID
+} from "../actionTypes/actionTypes";
 
 export const initialState = {
   menuItems: [
@@ -101,17 +109,23 @@ export const initialState = {
   ],
   shopping_cart: {
     menu_item: [], // { item_id: -1, item_name: "", quantity: 0 }
+    subtotal: 0,
     total: 0,
   },
   item_counter: [
-    {item_id: 0, counter: 0},
-    {item_id: 1, counter: 0},
-    {item_id: 2, counter: 0},
-    {item_id: 3, counter: 0},
-    {item_id: 4, counter: 0},
-    {item_id: 5, counter: 0},
+    { item_id: 0, counter: 0 },
+    { item_id: 1, counter: 0 },
+    { item_id: 2, counter: 0 },
+    { item_id: 3, counter: 0 },
+    { item_id: 4, counter: 0 },
+    { item_id: 5, counter: 0 },
   ],
   active_order: false,
+  customer_info: {
+    firstname: "",
+    lastname: "",
+  },
+  order_id: "",
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -120,46 +134,73 @@ const cartReducer = (state = initialState, action) => {
     case ADD_ITEM:
       return {
         ...state,
-        item_counter: state.item_counter.map((item) => 
-        item.item_id === action.item_id ? {...item, counter: item.counter + 1} : item)
+        item_counter: state.item_counter.map((item) =>
+          item.item_id === action.item_id
+            ? { ...item, counter: item.counter + 1 }
+            : item
+        ),
       };
     case DELETE_ITEM:
       return {
         ...state,
-        item_counter: state.item_counter.map((item) => 
-        item.item_id === action.item_id ? {...item, counter: item.counter - 1} : item)
+        item_counter: state.item_counter.map((item) =>
+          item.item_id === action.item_id
+            ? { ...item, counter: item.counter - 1 }
+            : item
+        ),
       };
     case UPDATE_ITEM:
       return {
         ...state,
-        item_counter: state.item_counter.map((count, index) => 
-        index === action.item_id ? action.value : count),
+        item_counter: state.item_counter.map((count, index) =>
+          index === action.item_id ? action.value : count
+        ),
       };
-      case LOAD_CART:
-        const shoppingCartItems = state.item_counter.filter(item => item.counter > 0)
-        .map(item => ({
+    case LOAD_CART:
+      const shoppingCartItems = state.item_counter
+        .filter((item) => item.counter > 0)
+        .map((item) => ({
           item_id: item.item_id,
           quantity: item.counter,
-          item_name: state.menuItems.find(menuItem => menuItem.item_id === item.item_id)?.item_name,
-          price: state.menuItems.find(menuItem => menuItem.item_id === item.item_id)?.pricing.single
+          item_name: state.menuItems.find(
+            (menuItem) => menuItem.item_id === item.item_id
+          )?.item_name,
+          price: state.menuItems.find(
+            (menuItem) => menuItem.item_id === item.item_id
+          )?.pricing.single,
         }));
 
-        const cartTotal = shoppingCartItems.reduce((total, item) => {
-          return total + (item.quantity * item.price);
-        }, 0);
+      const cartTotal = shoppingCartItems.reduce((total, item) => {
+        return total + item.quantity * item.price;
+      }, 0);
 
-        return {
-          ...state,
-          shopping_cart: {
-            menu_item: shoppingCartItems,
-            total: cartTotal,
-          }
-        };
-        case PROCESS_ORDER: 
-        return {
-          ...state,
-          active_order: !state.active_order,
-        };
+      const total = cartTotal + (cartTotal * 0.15);
+      return {
+        ...state,
+        shopping_cart: {
+          menu_item: shoppingCartItems,
+          subtotal: cartTotal,
+          total: total,
+        },
+      };
+    case PROCESS_ORDER:
+      return {
+        ...state,
+        active_order: !state.active_order,
+      };
+    case ADD_CUSTOMER_INFO:
+      return {
+        ...state,
+        customer_info: {
+          firstname: action.firstname,
+          lastname: action.lastname,
+        }
+      };
+    case UPDATE_ORDER_ID:
+      return {
+        ...state,
+        order_id: action.order_id,
+      };
     default:
       return state;
   }
