@@ -51,7 +51,7 @@
 
 .checkout-page {
   width: 100%;
-  min-height: auto;
+  /* height: 100vh; */
   background-color: var(--color-accent);
   display: flex;
   flex-direction: column;

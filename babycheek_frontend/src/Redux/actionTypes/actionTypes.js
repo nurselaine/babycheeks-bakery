@@ -6,3 +6,4 @@ export const PROCESS_ORDER = "PROCESS_ORDER";
 export const ADD_CUSTOMER_INFO = "ADD_CUSTOMER_INFO";
 export const UPDATE_ORDER_ID = "UPDATE_ORDER_ID";
 export const COMPLETE_ORDER = "COMPLETE_ORDER";
+export const EMPTY_CART = "EMPTY_CART";

@@ -6,7 +6,8 @@ import {
   PROCESS_ORDER,
   COMPLETE_ORDER,
   ADD_CUSTOMER_INFO,
-  UPDATE_ORDER_ID
+  UPDATE_ORDER_ID,
+  EMPTY_CART
 } from "../actionTypes/actionTypes";
 
 export const initialState = {
@@ -193,11 +194,6 @@ const cartReducer = (state = initialState, action) => {
     case COMPLETE_ORDER:
       return {
         ...state,
-        shopping_cart: {
-          menu_item: [], // { item_id: -1, item_name: "", quantity: 0 }
-          subtotal: 0,
-          total: 0,
-        },
         complete_order: !state.complete_order,
       };
     case ADD_CUSTOMER_INFO:
@@ -213,6 +209,15 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         order_id: action.order_id,
       };
+    case EMPTY_CART: 
+      return {
+        ...state,
+        shopping_cart: {
+          menu_item: [], // { item_id: -1, item_name: "", quantity: 0 }
+          subtotal: 0,
+          total: 0,
+        },
+      }
     default:
       return state;
   }
