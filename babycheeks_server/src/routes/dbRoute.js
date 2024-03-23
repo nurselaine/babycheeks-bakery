@@ -160,7 +160,7 @@ router.get('/getCustomerOrder/:id', async (req, res, next) => {
     let order_id = req.params.id;
     let [rows] = await pool.query(`SELECT * FROM CUSTOMER_ORDER WHERE id=?`, [order_id]);
     let items = await pool.query('SELECT * FROM ORDER_ITEM WHERE order_id=?', [order_id]);
-
+    console.log(items);
     res.status(200).send({
       orders: rows,
       items: items[0],
@@ -175,6 +175,12 @@ router.get('/getCustomerOrder/:id', async (req, res, next) => {
       timestamp: new Date(),
     });
   }
+});
+
+router.get('/getAllOrderItems', async (req, res, next) => {
+  let items = await pool.query(`SELECT * FROM ORDER_ITEM`);
+  console.log('order item table', items);
+  res.status(200).send(items);
 });
 
 // create customer order
