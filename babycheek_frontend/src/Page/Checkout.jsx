@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   loadCart,
   processOrder,
-  addCustomerInfo,
+  completeOrder,
 } from "../Redux/actions/cartActions";
-import "./Page.css";
 import Receipt from "../component/OrderSummary/Receipt";
+import OrderConfirmation from "../component/OrderSummary/OrderConfirmation";
+import "./Page.css";
 
 const Checkout = () => {
   let menuItems = useSelector((state) => state.menuItems);
@@ -17,6 +18,7 @@ const Checkout = () => {
   const shoppingcart = useSelector((state) => state.shopping_cart);
   const orderProcessing = useSelector((state) => state.active_order);
   const order_id = useSelector((state) => state.order_id);
+  const complete_order = useSelector((state) => state.complete_order);
 
   const handleOrderSubmit = () => {
     dispatch(loadCart());
@@ -25,63 +27,65 @@ const Checkout = () => {
 
   return (
     <LandingLayout>
-      <div className="checkout-page">
-        <div className="store-items">
-          {!orderProcessing
-            ? menuItems.map((item, idx) => (
-                <TransactionPane
-                  item_id={item.item_id}
-                  key={`item_key_${idx}`}
-                />
-              ))
-            : shoppingcart.menu_item.map((item, idx) => (
-                <TransactionPane
-                  item_id={item.item_id}
-                  key={`item_key_${idx}`}
-                />
-              ))}
-        </div>
-        <div className="submit-ctn">
-          {orderProcessing ? (
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <button
-                className="submitOrder-btn"
-                onClick={() => dispatch(processOrder())}
-              >
-                Go Back
-              </button>
-              <Receipt />
+      {!complete_order && (
+        <div>
+          <div className="checkout-page">
+            <div className="store-items">
+              {!orderProcessing
+                ? menuItems.map((item, idx) => (
+                    <TransactionPane
+                      item_id={item.item_id}
+                      key={`item_key_${idx}`}
+                    />
+                  ))
+                : shoppingcart.menu_item.map((item, idx) => (
+                    <TransactionPane
+                      item_id={item.item_id}
+                      key={`item_key_${idx}`}
+                    />
+                  ))}
             </div>
-          ) : (
+
+            <div className="submit-ctn">
+              {orderProcessing && !order_id ? (
+                <div className="stack-items">
+                  <button
+                    className="submitOrder-btn"
+                    onClick={() => dispatch(processOrder())}
+                  >
+                    Go Back
+                  </button>
+                  <Receipt />
+                </div>
+              ) : (
+                <button
+                  className="submitOrder-btn"
+                  onClick={() => handleOrderSubmit()}
+                >
+                  Submit Order
+                </button>
+              )}
+              {orderProcessing && <PayPalPayment />}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {complete_order && (
+        <div className="order-confirmation">
+          <div className="stack-items">
+            <OrderConfirmation order_id={order_id} />
+            <Receipt />
             <button
               className="submitOrder-btn"
-              onClick={() => handleOrderSubmit()}
+              onClick={() => dispatch(completeOrder())}
             >
-              Submit Order
+              Shop More
             </button>
-          )}
-          {orderProcessing && <PayPalPayment />}
-
-          {order_id && <OrderConfirmation order_id={order_id} />}
+          </div>
         </div>
-      </div>
+      )}
     </LandingLayout>
-  );
-};
-
-export const OrderConfirmation = ({ order_id }) => {
-  return (
-    <div className="confirmation-ctn">
-      <p>Thank you for your order!</p>
-      <p>Order ID: {order_id}</p>
-      <p>Please save this number for pick up.</p>
-      <img
-        src="./assets/checkout/checked.png"
-        alt="check-mark"
-        width="20px"
-        height="20px"
-      />
-    </div>
   );
 };
 

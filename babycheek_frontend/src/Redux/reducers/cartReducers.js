@@ -4,6 +4,7 @@ import {
   UPDATE_ITEM,
   LOAD_CART,
   PROCESS_ORDER,
+  COMPLETE_ORDER,
   ADD_CUSTOMER_INFO,
   UPDATE_ORDER_ID
 } from "../actionTypes/actionTypes";
@@ -121,6 +122,7 @@ export const initialState = {
     { item_id: 5, counter: 0 },
   ],
   active_order: false,
+  complete_order: false,
   customer_info: {
     firstname: "",
     lastname: "",
@@ -187,6 +189,16 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         active_order: !state.active_order,
+      };
+    case COMPLETE_ORDER:
+      return {
+        ...state,
+        shopping_cart: {
+          menu_item: [], // { item_id: -1, item_name: "", quantity: 0 }
+          subtotal: 0,
+          total: 0,
+        },
+        complete_order: !state.complete_order,
       };
     case ADD_CUSTOMER_INFO:
       return {

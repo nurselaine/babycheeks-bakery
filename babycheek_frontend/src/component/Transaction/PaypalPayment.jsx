@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import "./Transaction_styles.css";
 import { useSelector, useDispatch } from "react-redux";
-import { processOrder, updateOrderID } from "../../Redux/actions/cartActions";
+import { completeOrder, processOrder, updateOrderID } from "../../Redux/actions/cartActions";
 
 const PayPalPayment = () => {
-  let [orderApproved, setOrderApproved] = useState(false);
   const shopping_cart = useSelector(state => state.shopping_cart);
-  const orderID = useSelector(state => state.orderID);
   const dispatch = useDispatch();
 
   const createOrder = async () => {
@@ -81,6 +79,7 @@ const PayPalPayment = () => {
           orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];
         
         dispatch(updateOrderID(orderData?.id));
+        dispatch(completeOrder());
         console.log(
           "Capture result",
           orderData,

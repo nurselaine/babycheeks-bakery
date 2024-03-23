@@ -1,4 +1,4 @@
-import { ADD_ITEM, DELETE_ITEM, UPDATE_ITEM, LOAD_CART, PROCESS_ORDER, ADD_CUSTOMER_INFO, UPDATE_ORDER_ID } from "../actionTypes/actionTypes";
+import { ADD_ITEM, DELETE_ITEM, UPDATE_ITEM, LOAD_CART, PROCESS_ORDER, COMPLETE_ORDER, ADD_CUSTOMER_INFO, UPDATE_ORDER_ID } from "../actionTypes/actionTypes";
 
 // created two action creators aka pure js functions that returns
 // action object with specific type
@@ -40,6 +40,12 @@ const processOrder = () => {
   }
 }
 
+const completeOrder = () => {
+  return {
+    type: COMPLETE_ORDER,
+  }
+}
+
 const addCustomerInfo = (firstname, lastname) => {
   return {
     type: ADD_CUSTOMER_INFO,
@@ -55,4 +61,5 @@ const updateOrderID = (order_id) => {
   }
 }
 
-export { addItem, deleteItem, updateItem, loadCart, processOrder, addCustomerInfo, updateOrderID };
+
+export { addItem, deleteItem, updateItem, loadCart, processOrder, completeOrder, addCustomerInfo, updateOrderID };

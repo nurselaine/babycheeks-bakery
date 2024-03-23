@@ -17,3 +17,14 @@
   justify-content: space-between;
   margin: 10px 0;
 }
+
+.confirmation-ctn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 2rem;
+  font-size: 2rem;
+  font-family: 'Bebas Neue', sans-serif;
+  padding: 20px;
+}
