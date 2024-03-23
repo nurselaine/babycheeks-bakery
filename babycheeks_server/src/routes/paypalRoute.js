@@ -59,13 +59,17 @@ const createDBOrder = async (jsonResponse) => {
       console.log('Succesfully added order to Customer Orders table');
     }
 
-    for(let item of cart.menu_item){
-      await pool.query(`INSERT INTO ORDER_ITEM (order_id, menu_id, quantity)
-      VALUES (?,?,?)`, [custom_key, item.item_id, item.quantity]);
+    if(result){
+      for(let item of cart.menu_item){
+        await pool.query(`INSERT INTO ORDER_ITEM (order_id, menu_id, quantity)
+        VALUES (?,?,?)`, [custom_key, item.item_id + 1, item.quantity]);
+      }
+      console.log('Succesfully added order items to database.');
     }
-    console.log('Succesfully added order items to database.');
+    return true;
   } catch (error) {
     console.error('ERROR: creating new order', error);
+    return false;
   }
 };
 

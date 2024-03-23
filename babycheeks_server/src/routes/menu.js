@@ -34,7 +34,6 @@ router.get('/description', async (req, res, next) => {
     let desc = [];
     let entries = await client.getEntries();
     entries.items.forEach((entry) => {
-      console.log(entry.fields.brandname);
       if (entry.fields.description) {
         desc.push(entry.fields.description);
       }
@@ -51,6 +50,45 @@ router.get('/description', async (req, res, next) => {
       message: 'internal server error',
       timestamp: new Date(),
     });
+  }
+});
+
+router.get('/menuItems', async (req, res, next) => {
+  try {
+
+    let menuItems = [];
+    let entries = await client.getEntries();
+    menuItems = entries.items.map((entry, idx) => ({
+      item_id: idx,
+      item_name: entry.fields.title,
+      item_description: entry.fields.description,
+      item_assets: {
+        bg: "",
+        mbg: "",
+        cookie: ""
+      }
+    }))
+/**
+ *    {
+      item_id: 0,
+      item_name: "Peanut Butter Cookies & Cream",
+      item_description:
+        "A smooth mix of chocolate and peanut butter, studded with the tasty crunch of cookies and cream bits",
+      item_assets: {
+        bg: "./assets/bg/pb_ncream_bg.png",
+        mbg: "./assets/mobile/pb_ncream_mbg.png",
+        cookie: "./assets/item/pb_ncream_cookie.png",
+      },
+      pricing: {
+        single: 5.4,
+        half_dozen: 18.5,
+        dozen: 28.0,
+      },
+    },
+ *
+*/
+  } catch (error) {
+    console.error('ERROR trying to get menu items from CMS', error);
   }
 });
 
