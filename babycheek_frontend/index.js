@@ -6,15 +6,12 @@ import { Provider } from "react-redux";
 import store from "./src/Redux/store";
 import App from "./src/App";
 import Checkout from "./src/Page/Checkout";
+import OrderFulfillment from "./src/Page/OrderFulfillment";
 const initialOptions = {
   "client-id": process.env.PAYPAL_CLIENT_ID,
   currency: "USD",
   intent: "capture"
 }
-
-// console.log("PROCESS::::::::::::", process.env.PAYPAL_CLIENT_ID);
-// console.log("PROCESS::::::::::::", process.env.REACT_APP_TESTKEY);
-// console.log("PROCESS::::::::::::", process.env.TEST_KEY);
 
 const router = createBrowserRouter([
   {
@@ -24,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/checkout",
     element: <Checkout />
+  },
+  {
+    path: "/orders",
+    element: <OrderFulfillment />
   }
 ])
 
