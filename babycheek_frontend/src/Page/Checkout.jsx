@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import LandingLayout from "../Layout/LandingLayout";
 import TransactionPane from "../component/transaction/TransactionPane";
 import PayPalPayment from "../component/Transaction/PaypalPayment";

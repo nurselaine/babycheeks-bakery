@@ -3,10 +3,13 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { Provider } from "react-redux";
-import store from "./src/Redux/store";
+import configureStore from "./src/Redux/store";
 import App from "./src/App";
 import Checkout from "./src/Page/Checkout";
 import OrderFulfillment from "./src/Page/OrderFulfillment";
+
+const store = configureStore();
+
 const initialOptions = {
   "client-id": process.env.PAYPAL_CLIENT_ID,
   currency: "USD",

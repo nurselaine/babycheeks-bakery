@@ -1,4 +1,7 @@
 import {
+  FETCH_MENUITEMS_REQUEST,
+  FETCH_MENUITEMS_SUCCESS,
+  FETCH_MENUITEMS_FAILURE,
   ADD_ITEM,
   DELETE_ITEM,
   UPDATE_ITEM,
@@ -7,10 +10,12 @@ import {
   COMPLETE_ORDER,
   ADD_CUSTOMER_INFO,
   UPDATE_ORDER_ID,
-  EMPTY_CART
+  EMPTY_CART,
 } from "../actionTypes/actionTypes";
 
 export const initialState = {
+  loading: false,
+  error: null,
   menuItems: [
     {
       item_id: 0,
@@ -134,6 +139,24 @@ export const initialState = {
 const cartReducer = (state = initialState, action) => {
   console.log("ACTION::::", action);
   switch (action.type) {
+    case FETCH_MENUITEMS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case FETCH_MENUITEMS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        menuItems: action.payload,
+      };
+    case FETCH_MENUITEMS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     case ADD_ITEM:
       return {
         ...state,
@@ -177,7 +200,7 @@ const cartReducer = (state = initialState, action) => {
         return total + item.quantity * item.price;
       }, 0);
 
-      const total = cartTotal + (cartTotal * 0.15);
+      const total = cartTotal + cartTotal * 0.15;
       return {
         ...state,
         shopping_cart: {
@@ -202,14 +225,14 @@ const cartReducer = (state = initialState, action) => {
         customer_info: {
           firstname: action.firstname,
           lastname: action.lastname,
-        }
+        },
       };
     case UPDATE_ORDER_ID:
       return {
         ...state,
         order_id: action.order_id,
       };
-    case EMPTY_CART: 
+    case EMPTY_CART:
       return {
         ...state,
         shopping_cart: {
@@ -217,7 +240,15 @@ const cartReducer = (state = initialState, action) => {
           subtotal: 0,
           total: 0,
         },
-      }
+        item_counter: [
+          { item_id: 0, counter: 0 },
+          { item_id: 1, counter: 0 },
+          { item_id: 2, counter: 0 },
+          { item_id: 3, counter: 0 },
+          { item_id: 4, counter: 0 },
+          { item_id: 5, counter: 0 },
+        ],
+      };
     default:
       return state;
   }
