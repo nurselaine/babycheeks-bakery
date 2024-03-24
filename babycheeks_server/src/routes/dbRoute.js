@@ -3,7 +3,7 @@
 const {v4: uuidv4} = require('uuid');
 const express = require('express');
 const router = express.Router();
-const pool = require('../services/db');
+const {pool, query} = require('../services/db');
 
 // implement router for employee data to server to client side
 
@@ -11,8 +11,8 @@ const pool = require('../services/db');
 // gets all shop owners
 router.get('/getAdminUsers', async (req, res, next) => {
   try {
-    let resRows = await pool.query('SELECT * FROM ADMIN_USER');
-    let rows = resRows[0];
+    let resRows = await query('SELECT * FROM ADMIN_USER');
+    let rows = resRows;
     console.log(resRows);
     res.status(200).send({
       employees: rows,
@@ -33,7 +33,7 @@ router.get('/getAdminUser/:id', async (req, res, next) => {
   try {
     let id = req.params.id;
     // do ID validation before sending request
-    const [rows] = await pool.query(`SELECT * FROM ADMIN_USER USER WHERE id=?`, id);
+    const [rows] = await query(`SELECT * FROM ADMIN_USER USER WHERE id=?`, [id]);
     // ? (prepared statement) sending sql request and values separately is to prevent sql injection attacks and increase security
     console.log(rows);
     res.status(200).send({
@@ -54,7 +54,7 @@ router.post('/createAdminUser', async (req, res, next) => {
   try {
     console.log('BODY: ', req.body);
     let {employee_id, firstname, lastname} = req.body;
-    await pool.query(`INSERT INTO ADMIN_USER (employee_id, firstname, lastname) VALUES
+    await query(`INSERT INTO ADMIN_USER (employee_id, firstname, lastname) VALUES
     (?, ?, ?)`, [employee_id, firstname, lastname]);
     res.status(200).send({
       message: `ADMIN USER ${firstname} ${lastname} CREATED successfully`,
@@ -75,7 +75,7 @@ router.delete('/removeAdminUser/:id', async (req, res, next) => {
   try {
     let employee_id = req.params.id;
     console.log(employee_id);
-    await pool.query(`DELETE FROM ADMIN_USER WHERE employee_id=?`, employee_id);
+    await query(`DELETE FROM ADMIN_USER WHERE employee_id=?`, employee_id);
     res.status(200).send({
       message: `ADMIN USER ${employee_id} DELETED successfully`,
       timestamp: new Date(),
@@ -96,8 +96,8 @@ router.delete('/removeAdminUser/:id', async (req, res, next) => {
 // get all orders
 router.get('/getAllOrders', async (req, res, next) => {
   try {
-    let resRows = await pool.query(`SELECT * FROM CUSTOMER_ORDER`);
-    let rows = resRows[0];
+    let resRows = await query(`SELECT * FROM CUSTOMER_ORDER`);
+    let rows = resRows;
     console.log(resRows);
     res.status(200).send({
       orders: rows,
@@ -117,10 +117,9 @@ router.get('/getAllOrders', async (req, res, next) => {
 // get fulfilled order
 router.get('/getFulfilled', async (req, res, next) => {
   try {
-    let rows = await pool.query(`SELECT * FROM CUSTOMER_ORDER WHERE fulfilled=?`, [true]);
-    console.log(rows[0]);
+    let rows = await query(`SELECT * FROM CUSTOMER_ORDER WHERE fulfilled=?`, [true]);
     res.status(200).send({
-      fullfilled_orders: rows[0],
+      fullfilled_orders: rows,
       message: 'Fulfilled customer orders retrieved successfully.',
       timestamp: new Date(),
     });
@@ -137,10 +136,10 @@ router.get('/getFulfilled', async (req, res, next) => {
 // get unfulfilled order
 router.get('/getUnfulfilled', async (req, res, next) => {
   try {
-    let [rows] = await pool.query(`SELECT * FROM CUSTOMER_ORDER WHERE fulfilled=?`, [false]);
+    let rows = await query(`SELECT * FROM CUSTOMER_ORDER WHERE fulfilled=false`);
     console.log(rows);
     res.status(200).send({
-      fullfilled_orders: rows,
+      unfullfilled_orders: rows,
       message: 'Unfulfilled customer orders retrieved successfully.',
       timestamp: new Date(),
     });
@@ -158,12 +157,12 @@ router.get('/getUnfulfilled', async (req, res, next) => {
 router.get('/getCustomerOrder/:id', async (req, res, next) => {
   try {
     let order_id = req.params.id;
-    let [rows] = await pool.query(`SELECT * FROM CUSTOMER_ORDER WHERE id=?`, [order_id]);
-    let items = await pool.query('SELECT * FROM ORDER_ITEM WHERE order_id=?', [order_id]);
+    let [rows] = await query(`SELECT * FROM CUSTOMER_ORDER WHERE id=?`, [order_id]);
+    let items = await query('SELECT * FROM ORDER_ITEM WHERE order_id=?', [order_id]);
     console.log(items);
     res.status(200).send({
       orders: rows,
-      items: items[0],
+      items: items,
       message: 'Customer orders retrieved successfully.',
       timestamp: new Date(),
     });
@@ -178,7 +177,7 @@ router.get('/getCustomerOrder/:id', async (req, res, next) => {
 });
 
 router.get('/getAllOrderItems', async (req, res, next) => {
-  let items = await pool.query(`SELECT * FROM ORDER_ITEM`);
+  let items = await query(`SELECT * FROM ORDER_ITEM`);
   console.log('order item table', items);
   res.status(200).send(items);
 });
@@ -186,14 +185,13 @@ router.get('/getAllOrderItems', async (req, res, next) => {
 // create customer order
 router.post('/createNewOrder', async (req, res, next) => {
   try {
-    let custom_key = uuidv4();
-    let {firstname, lastname, subtotal, total, items} = req.body;
-    await pool.query(`INSERT INTO CUSTOMER_ORDER (id, firstname, lastname, subtotal, total, fulfilled)
+    let {custom_key, firstname, lastname, subtotal, total, items} = req.body;
+    await query(`INSERT INTO CUSTOMER_ORDER (id, firstname, lastname, subtotal, total, fulfilled)
     VALUES (?, ?, ?, ?, ?, ?)`, [custom_key, firstname, lastname, subtotal, total, false]);
 
     // create order item for each cart item
     for(let item of items){
-      await pool.query(`INSERT INTO ORDER_ITEM (order_id, menu_id, quantity)
+      await query(`INSERT INTO ORDER_ITEM (order_id, menu_id, quantity)
       VALUES (?,?,?)`, [custom_key, item[0], item[1]]);
     }
     res.status(200).send({
@@ -215,7 +213,7 @@ router.post('/createNewOrder', async (req, res, next) => {
 router.put('/updateOrderStatus/:id', async (req, res, next) => {
   try {
     let order_id = req.params.id;
-    await pool.query(`UPDATE CUSTOMER_ORDER co SET fulfilled = ? WHERE co.id = ?`, [true, order_id]);
+    await query(`UPDATE CUSTOMER_ORDER co SET fulfilled = ? WHERE co.id = ?`, [true, order_id]);
     res.status(200).send({
       message: 'SUCCESSFULLY UPDATED ORDER STATUS TO FULFILLED',
       timestamp: new Date(),
@@ -235,9 +233,9 @@ router.put('/updateOrderStatus/:id', async (req, res, next) => {
 // get all menu items
 router.get('/getMenu', async (req, res, next) => {
   try {
-    let rows = await pool.query(`SELECT * FROM MENU`);
+    let rows = await query(`SELECT * FROM MENU`);
     res.status(200).send({
-      items: rows[0],
+      items: rows,
       message: 'SUCCESSFULLY RETREIVED MENU DATA',
       timestamp: new Date(),
     });
@@ -255,7 +253,7 @@ router.get('/getMenu', async (req, res, next) => {
 router.post('/addToMenu', async (req, res, next) => {
   try {
     let {name, description, cost} = req.body;
-    await pool.query(`INSERT INTO MENU (name, description, cost) VALUES (?, ?, ?)`, [name, description, cost]);
+    await query(`INSERT INTO MENU (name, description, cost) VALUES (?, ?, ?)`, [name, description, cost]);
     res.status(200).send({
       message: 'SUCCESSFULLY ADD NEW MENU ITEM',
       timestamp: new Date(),
@@ -275,8 +273,7 @@ router.put('/updateMenuItem/:id', async (req, res, next) => {
   try {
     let {name, description, cost} = req.body;
     let id = req.params.id;
-    console.log(id);
-    await pool.query(`UPDATE MENU SET name = ?, description = ?, cost = ? WHERE id=?`, [name, description, cost, id]);
+    await query(`UPDATE MENU SET name = ?, description = ?, cost = ? WHERE id=?`, [name, description, cost, id]);
     res.status(200).send({
       message: 'SUCCESSFULLY UPDATED MENU ITEM',
       timestamp: new Date(),
@@ -295,8 +292,7 @@ router.put('/updateMenuItem/:id', async (req, res, next) => {
 router.delete('/deleteMenuItem/:id', async (req, res, next) => {
   try {
     let id = req.params.id;
-    console.log(id);
-    await pool.query(`DELETE FROM MENU WHERE id= ?`, id);
+    await query(`DELETE FROM MENU WHERE id= ?`, id);
     res.status(200).send({
       message: 'SUCCESSFULLY UPDATED MENU ITEM',
       timestamp: new Date(),
