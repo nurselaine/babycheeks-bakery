@@ -55,38 +55,23 @@ router.get('/description', async (req, res, next) => {
 
 router.get('/menuItems', async (req, res, next) => {
   try {
-
-    let menuItems = [];
     let entries = await client.getEntries();
-    menuItems = entries.items.map((entry, idx) => ({
+    let menuItems = entries.items.map((entry, idx) => ({
       item_id: idx,
       item_name: entry.fields.title,
       item_description: entry.fields.description,
-      item_assets: {
-        bg: "",
-        mbg: "",
-        cookie: ""
-      }
-    }))
-/**
- *    {
-      item_id: 0,
-      item_name: "Peanut Butter Cookies & Cream",
-      item_description:
-        "A smooth mix of chocolate and peanut butter, studded with the tasty crunch of cookies and cream bits",
-      item_assets: {
-        bg: "./assets/bg/pb_ncream_bg.png",
-        mbg: "./assets/mobile/pb_ncream_mbg.png",
-        cookie: "./assets/item/pb_ncream_cookie.png",
-      },
       pricing: {
-        single: 5.4,
+        single: entry.fields.itemPrice,
         half_dozen: 18.5,
-        dozen: 28.0,
+        dozen: 28,
       },
-    },
- *
-*/
+    }));
+
+    res.status(200).send({
+      menuItems,
+      message: 'Menu items retrieved successfully.',
+      timestamp: new Date(),
+    });
   } catch (error) {
     console.error('ERROR trying to get menu items from CMS', error);
   }
