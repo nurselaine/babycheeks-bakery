@@ -6,7 +6,11 @@ import { Provider } from "react-redux";
 import configureStore from "./src/Redux/store";
 import App from "./src/App";
 import Checkout from "./src/Page/Checkout";
-import OrderFulfillment from "./src/Page/OrderFulfillment";
+import DashboardLayout from "./src/Component/Dashboard/DashboardLayout";
+import AccountOverview from "./src/Component/Dashboard/account/AccountOverview"
+import CustomerOverview from "./src/Component/Dashboard/customers/CustomerOverview";
+import OrdersOverview from "./src/Component/Dashboard/orders/OrdersOverview";
+import DashboardOverview from "./src/Component/Dashboard/overview/DashboardOverview";
 
 const store = configureStore();
 
@@ -26,10 +30,27 @@ const router = createBrowserRouter([
     element: <Checkout />
   },
   {
-    path: "/orders",
-    element: <OrderFulfillment />
+    path: "/dashboard",
+    element: <DashboardOverview/>
+  },
+  {
+    path: "/dashboard/orders",
+    element: <OrdersOverview/>
+  },
+  {
+    // provide high level info on each customer
+    path: "/dashboard/customers",
+    element: <CustomerOverview/>
+  },
+  {
+    path: "/dashboard/account",
+    element: <AccountOverview/>
+  },
+  {
+    path: "/dashboard/settings",
+    element: <DashboardLayout/>
   }
-])
+]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
