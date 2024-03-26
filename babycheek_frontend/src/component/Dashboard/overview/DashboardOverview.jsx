@@ -12,15 +12,11 @@ import SalesGraph from './SalesGraph'
 
 
 export default function DashboardOverview() {
-  const [dataFetched, setDataFetched] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(!dataFetched){
-      setDataFetched(true);
       dispatch(fetchOrderData());
-    }
-  }, [dispatch, dataFetched]);
+  }, [dispatch]);
 
   const allOrders = useSelector((state) => state.dashboard.orders);
   const totalOrders = allOrders.length;
@@ -54,7 +50,7 @@ export default function DashboardOverview() {
           /> */}
         </Grid>
         <Grid lg={4} md={6} xs={12}></Grid>
-        <SalesGraph />
+        <SalesGraph totalOrders={totalOrders}/>
       </Grid>
     </DashboardLayout>
   )
