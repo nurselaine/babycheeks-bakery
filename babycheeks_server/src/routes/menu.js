@@ -66,6 +66,7 @@ router.get('/menuItems', async (req, res, next) => {
         dozen: 28,
       },
     }));
+    menuItems.pop();
 
     res.status(200).send({
       menuItems,
@@ -74,6 +75,10 @@ router.get('/menuItems', async (req, res, next) => {
     });
   } catch (error) {
     console.error('ERROR trying to get menu items from CMS', error);
+    res.status(404).send({
+      message: 'ERROR GETTING: Menu items.' + error,
+      timestamp: new Date(),
+    });
   }
 });
 
