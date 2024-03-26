@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import configureStore from "./src/Redux/store";
 import App from "./src/App";
 import Checkout from "./src/Page/Checkout";

@@ -18,6 +18,7 @@ import dayjs from 'dayjs'
 import { CheckSquare as CheckSquareIcon } from '@phosphor-icons/react/dist/ssr'
 import { useSelection } from './../../../hooks/useSelection'
 import { XSquare as XSquareIcon } from '@phosphor-icons/react/dist/ssr'
+import { useOrderStatusUpdater } from '../../../hooks/useOrderStatusUpdater'
 
 function noop() {
   // do nothing
@@ -87,7 +88,7 @@ export function OrdersTable({ count = 0, rows = [], page = 0, rowsPerPage = 0 })
                       </Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell>{row.fulfilled === 1 ? <CheckSquareIcon color='#15b79f' /> : <XSquareIcon color='#f04438' />}</TableCell>
+                  <TableCell onClick={() => useOrderStatusUpdater(row.id)}>{row.fulfilled === 1 ? <CheckSquareIcon color='#15b79f' /> : <XSquareIcon color='#f04438' />}</TableCell>
                   <TableCell>{dayjs(row.order_date).format('MMM D, YYYY')}</TableCell>
                   <TableCell>${row.total}</TableCell>
                 </TableRow>

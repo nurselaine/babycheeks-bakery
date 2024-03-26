@@ -10,6 +10,7 @@ const TransactionPane = ({ item_id }) => {
   const [largeScreen, setLargeScreen] = useState(false);
   
   const itemData = useSelector(state => state.menuItems.find(item => item.item_id === item_id));
+  let price = itemData.pricing.single.toFixed(2);
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,9 +35,9 @@ const TransactionPane = ({ item_id }) => {
       <div className="content-ctn">
         <div className="pane-content">
           <p>{itemData.item_name}</p>
-          {largeScreen ? <p className="">{itemData.item_description}</p> : <p>${itemData.pricing.single.toFixed(2)}</p>}
+          {largeScreen ? <p className="">{itemData.item_description}</p> : <p>${price}</p>}
           <Counter item_id={item_id} />
-          {largeScreen && <p className="pane-price">${itemData.pricing.single.toFixed(2)}</p>}
+          {largeScreen && <p className="pane-price">${price}</p>}
         </div>
       </div>
     </div>

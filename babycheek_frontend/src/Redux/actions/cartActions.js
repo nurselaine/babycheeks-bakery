@@ -13,32 +13,42 @@ import {
   EMPTY_CART,
 } from "../actionTypes/actionTypes";
 
-// created two action creators aka pure js functions that returns
-// action object with specific type
-
-// each action obj must have specific UNIQUE type value
-// along with any additional data needed to update state
-
-const fetchMenuItemsRequest = (item_id) => {
+const fetchMenuItemsRequest = () => {
   return {
     type: FETCH_MENUITEMS_REQUEST,
-    item_id,
   };
 };
 
-const fetchMenuItemsSuccess = (item_id) => {
+const fetchMenuItemsSuccess = (payload) => {
   return {
     type: FETCH_MENUITEMS_SUCCESS,
-    item_id,
+    payload: payload,
   };
 };
 
-const fetchMenuItemsFailure = (item_id) => {
+const fetchMenuItemsFailure = (error) => {
   return {
     type: FETCH_MENUITEMS_FAILURE,
-    item_id,
+    error,
   };
 };
+
+export const fetchData = () => {
+  return async (dispatch, getState) => {
+    dispatch(fetchMenuItemsRequest());
+    try {
+      const response = await fetch('http://localhost:3001/menu/menuItems')
+      .then((response) => response.json())
+      .then((data) => {return data.menuItems})
+      .catch((error) => console.error(error));
+
+      console.log("menu items ", response);
+      dispatch(fetchMenuItemsSuccess(response));
+    } catch (error) {
+      dispatch(fetchMenuItemsFailure(response.message));
+    }
+  }
+}
 
 const addItem = (item_id) => {
   return {

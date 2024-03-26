@@ -129,15 +129,10 @@ export const initialState = {
   ],
   active_order: false,
   complete_order: false,
-  customer_info: {
-    firstname: "",
-    lastname: "",
-  },
   order_id: "",
 };
 
 const cartReducer = (state = initialState, action) => {
-  console.log("ACTION::::", action);
   switch (action.type) {
     case FETCH_MENUITEMS_REQUEST:
       return {
@@ -146,10 +141,25 @@ const cartReducer = (state = initialState, action) => {
         error: null,
       };
     case FETCH_MENUITEMS_SUCCESS:
+      let updatedMenuItems = action.payload.map((newItem) => {
+        const existingItem = state.menuItems.find((item) => item.item_id === newItem.item_id);
+
+        if(existingItem){
+          return {
+            ...existingItem,
+            ...newItem,
+            pricing: {
+              single: parseFloat(newItem.pricing.single),
+              half_dozen: 18.5,
+              dozen: 28.0,
+            },
+          }
+        }
+      });
       return {
         ...state,
         loading: false,
-        menuItems: action.payload,
+        menuItems: updatedMenuItems,
       };
     case FETCH_MENUITEMS_FAILURE:
       return {

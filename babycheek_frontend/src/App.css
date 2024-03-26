@@ -1,3 +1,15 @@
+:root {
+  --color-empty-shade: 	#FDFDFD;
+  --color-light-shade: #eaeaea;
+  --color-lighter-shade: #edebe6;
+  --color-dark-shade: #6f6f66;
+  --color-darker-shade: #ecf3d3;
+  --color-text: #2d2d26;
+  --color-accent: #000000;
+  --color-constructive: #109d46;
+  --color-destructive: #d94b03;
+}
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -22,6 +34,7 @@ time, mark, audio, video {
 html, body {
 	height: 100%;
 	margin: 0;
+	background-color: #fdeaec;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
