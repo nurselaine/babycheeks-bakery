@@ -8,6 +8,7 @@ import { TotalCustomers } from './TotalCustomers'
 import { TotalOrders } from './TotalOrders'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOrderData } from '../../../Redux/actions/cartActions'
+import SalesGraph from './SalesGraph'
 
 
 export default function DashboardOverview() {
@@ -53,6 +54,7 @@ export default function DashboardOverview() {
           /> */}
         </Grid>
         <Grid lg={4} md={6} xs={12}></Grid>
+        <SalesGraph />
       </Grid>
     </DashboardLayout>
   )

@@ -35,41 +35,25 @@ export const initialCartState = {
     },
     {
       item_id: 1,
-      item_name: "Lemon Poppy Seed",
+      item_name: "Midnight mint",
       item_description:
-        "A zesty lemon cookie packed with poppy seeds, then stuffed with lemon filling and smothered in a lemon almond glaze",
+        "A warm chocolate cookie filled with a classic mix of semi-sweet chocolate and mint chips.",
       item_assets: {
-        bg: "./assets/bg/lemon_poppy_bg.png",
-        mbg: "./assets/mobile/lemon_poppy_mbg.png",
-        cookie: "./assets/item/lemon_poppy_cookie.png",
+        bg: "./assets/bg/mint_choc_bg.png",
+        mbg: "./assets/mobile/mint_choc_mbg.png",
+        cookie: "./assets/item/mint_choc_cookie.png",
       },
       pricing: {
-        single: 4.75,
+        single: 5,
         half_dozen: 18.5,
         dozen: 28.0,
       },
     },
     {
       item_id: 2,
-      item_name: "Mild Chocolate Chip",
-      item_description:
-        "The classic - you cannot go wrong. Thick, soft, and packed with milk chocolate chips",
-      item_assets: {
-        bg: "./assets/bg/original_bg.png",
-        mbg: "./assets/mobile/original_mbg.png",
-        cookie: "./assets/item/original_cookie.png",
-      },
-      pricing: {
-        single: 4.0,
-        half_dozen: 18.5,
-        dozen: 28.0,
-      },
-    },
-    {
-      item_id: 3,
       item_name: "Cookie Butter White Chip",
       item_description:
-        "A warm cookie butter cookie packed with cookie butter pieces and creamy white chips",
+        "A warm cookie butter cookie packed with cookie butter pieces and creamy white chips.",
       item_assets: {
         bg: "./assets/bg/cookie_butter_bg.png",
         mbg: "./assets/mobile/cookie_butter_mbg.png",
@@ -82,17 +66,33 @@ export const initialCartState = {
       },
     },
     {
-      item_id: 4,
-      item_name: "Midnight Mint",
+      item_id: 3,
+      item_name: "Lemon Poppy Seed",
       item_description:
-        "A warm chocolate cookie filled with a classic mix of semi-sweet chocolate and mint chips",
+        "A zesty lemon cookie packed with poppy seeds, then stuffed with lemon filling and smothered in a lemon almond glaze.",
       item_assets: {
-        bg: "./assets/bg/mint_choc_bg.png",
-        mbg: "./assets/mobile/mint_choc_mbg.png",
-        cookie: "./assets/item/mint_choc_cookie.png",
+        bg: "./assets/bg/lemon_poppy_bg.png",
+        mbg: "./assets/mobile/lemon_poppy_mbg.png",
+        cookie: "./assets/item/lemon_poppy_cookie.png",
       },
       pricing: {
-        single: 5.0,
+        single: 4.75,
+        half_dozen: 18.5,
+        dozen: 28.0,
+      },
+    },
+    {
+      item_id: 4,
+      item_name: "Milk Chocolate Chip",
+      item_description:
+        "The classic - you cannot go wrong. Thick, soft, and packed with milk chocolate chips.",
+      item_assets: {
+        bg: "./assets/bg/original_bg.png",
+        mbg: "./assets/mobile/original_mbg.png",
+        cookie: "./assets/item/original_cookie.png",
+      },
+      pricing: {
+        single: 4,
         half_dozen: 18.5,
         dozen: 28.0,
       },
