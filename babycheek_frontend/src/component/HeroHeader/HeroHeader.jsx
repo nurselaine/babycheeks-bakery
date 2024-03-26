@@ -13,7 +13,7 @@ const HeroHeader = ({item_id}) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const mainControls = useAnimation();
-  const itemData = useSelector(state => state.menuItems.find(item => item.item_id === item_id));
+  const itemData = useSelector(state => state.cart.menuItems.find(item => item.item_id === item_id));
 
   useEffect(() => {
     if (isInView) {

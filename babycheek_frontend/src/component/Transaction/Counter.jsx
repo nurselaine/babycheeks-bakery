@@ -10,8 +10,8 @@ import "./Transaction_styles.css";
 const Counter = ({item_id}) => {
 
   const dispatch = useDispatch();
-  const itemData = useSelector(state => state.menuItems.find(item => item.item_id === item_id));
-  const itemCounter = useSelector(state => state.item_counter.find(index => index.item_id === item_id));
+  const itemData = useSelector(state => state.cart.menuItems.find(item => item.item_id === item_id));
+  const itemCounter = useSelector(state => state.cart.item_counter.find(index => index.item_id === item_id));
 
   const userInputHandler = (e) => {
     let value = e.target.value;

@@ -3,14 +3,14 @@ import { useSelector } from "react-redux";
 import "./Receipt.css";
 
 const Receipt = () => {
-  const shopping_cart = useSelector((state) => state.shopping_cart);
+  const shopping_cart = useSelector((state) => state.cart.shopping_cart);
 
   return (
     <div className="receipt_ctn">
       <p>Order Summary</p>
       <div>
-        {shopping_cart?.menu_item?.map((item) => (
-          <div className="receipt_items">
+        {shopping_cart?.menu_item?.map((item, idx) => (
+          <div className="receipt_items" key={idx}>
             <p>
               {item.item_name} x {item.quantity}
             </p>

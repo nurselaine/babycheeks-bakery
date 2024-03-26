@@ -1,11 +1,23 @@
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 // import {configureStore} from '@reduxjs/toolkit';
 import cartReducer from "./reducers/cartReducers";
+import dashboardReducer from "./reducers/dashboardReducer";
 import { thunk } from "redux-thunk";
 
 import monitorReducersEnhancer from "./enhancers/monitorReducer";
 import loggerMiddleware from "./middleware/logger";
-import { initialState } from "./reducers/cartReducers";
+import { initialCartState } from "./reducers/cartReducers";
+import { initialDashboardState } from "./reducers/dashboardReducer";
+
+const rootReducer = combineReducers({
+  cart: cartReducer,
+  dashboard: dashboardReducer
+});
+
+const initialState = {
+  cart: initialCartState,
+  dashboard: initialDashboardState,
+}
 
 export default function configureStore(){
   const middlewares = [loggerMiddleware, thunk];
@@ -19,7 +31,7 @@ export default function configureStore(){
   // const enhancers = [middlewareEnhancer, monitorReducersEnhancer];
   // const composedEnhancers = composeWithDevTools(...enhancers);
 
-  const store = createStore(cartReducer, initialState, middlewareEnhancer);
+  const store = createStore(rootReducer, initialState, middlewareEnhancer);
 
   if (process.env.NODE_ENV !== 'production' && module.hot) {
     module.hot.accept('./reducers/cartReducers', () => store.replaceReducer(cartReducer))

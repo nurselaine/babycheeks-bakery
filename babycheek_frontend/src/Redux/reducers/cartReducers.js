@@ -13,7 +13,7 @@ import {
   EMPTY_CART,
 } from "../actionTypes/actionTypes";
 
-export const initialState = {
+export const initialCartState = {
   loading: false,
   error: null,
   menuItems: [
@@ -132,7 +132,7 @@ export const initialState = {
   order_id: "",
 };
 
-const cartReducer = (state = initialState, action) => {
+const cartReducer = (state = initialCartState, action) => {
   switch (action.type) {
     case FETCH_MENUITEMS_REQUEST:
       return {

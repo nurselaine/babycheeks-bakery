@@ -8,7 +8,7 @@ import {
 } from "../../Redux/actions/cartActions";
 
 const PayPalPayment = () => {
-  const shopping_cart = useSelector((state) => state.shopping_cart);
+  const shopping_cart = useSelector((state) => state.cart.shopping_cart);
   const dispatch = useDispatch();
 
   const createOrder = async () => {

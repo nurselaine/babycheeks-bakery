@@ -1,7 +1,5 @@
 import React, { useEffect, useState, memo } from "react";
 import { useSelector } from "react-redux";
-// useSelector helps read store and its contents
-// useDispatch dispatches actions/action creators that return actions
 import Counter from "./Counter";
 import "./Transaction_styles.css";
 
@@ -9,7 +7,7 @@ const TransactionPane = ({ item_id }) => {
 
   const [largeScreen, setLargeScreen] = useState(false);
   
-  const itemData = useSelector(state => state.menuItems.find(item => item.item_id === item_id));
+  const itemData = useSelector(state => state.cart.menuItems.find(item => item.item_id === item_id));
   let price = itemData.pricing.single.toFixed(2);
 
   useEffect(() => {

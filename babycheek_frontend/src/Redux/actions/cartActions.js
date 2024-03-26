@@ -2,6 +2,9 @@ import {
   FETCH_MENUITEMS_REQUEST,
   FETCH_MENUITEMS_SUCCESS,
   FETCH_MENUITEMS_FAILURE,
+  FETCH_ORDERS_REQUEST,
+  FETCH_ORDERS_SUCCESS,
+  FETCH_ORDERS_FAILURE,
   ADD_ITEM,
   DELETE_ITEM,
   UPDATE_ITEM,
@@ -45,7 +48,44 @@ export const fetchData = () => {
       console.log("menu items ", response);
       dispatch(fetchMenuItemsSuccess(response));
     } catch (error) {
-      dispatch(fetchMenuItemsFailure(response.message));
+      dispatch(fetchMenuItemsFailure(error.message));
+    }
+  }
+}
+
+const fetchOrderRequest = () => {
+  return {
+    type: FETCH_ORDERS_REQUEST,
+  };
+};
+
+const fetchOrderSuccess = (payload) => {
+  return {
+    type: FETCH_ORDERS_SUCCESS,
+    payload: payload,
+  };
+};
+
+const fetchOrderFailure = (error) => {
+  return {
+    type: FETCH_ORDERS_FAILURE,
+    error,
+  };
+};
+
+export const fetchOrderData = () => {
+  return async (dispatch, getState) => {
+    dispatch(fetchOrderRequest());
+    try {
+      const response = await fetch('http://localhost:3001/db/getAllOrders')
+      .then((response) => response.json())
+      .then((data) => {return data.orders})
+      .catch((error) => console.error(error));
+
+      console.log("orders ", response);
+      dispatch(fetchOrderSuccess(response));
+    } catch (error) {
+      dispatch(fetchOrderFailure(error.message));
     }
   }
 }
@@ -115,6 +155,9 @@ export {
   fetchMenuItemsRequest,
   fetchMenuItemsSuccess,
   fetchMenuItemsFailure,
+  fetchOrderRequest,
+  fetchOrderSuccess,
+  fetchOrderFailure,
   addItem,
   deleteItem,
   updateItem,

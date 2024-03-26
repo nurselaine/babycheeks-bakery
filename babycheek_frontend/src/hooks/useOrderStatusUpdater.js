@@ -10,4 +10,5 @@ export async function useOrderStatusUpdater(orderID) {
   .catch((error) => console.error(error));
 
   console.log(updateResponse);
+  return Promise.resolve(updateResponse)
 }

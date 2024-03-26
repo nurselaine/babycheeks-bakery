@@ -14,12 +14,12 @@ import OrderConfirmation from "../component/OrderSummary/OrderConfirmation";
 import "./Page.css";
 
 const Checkout = () => {
-  let menuItems = useSelector((state) => state.menuItems);
+  let menuItems = useSelector((state) => state.cart.menuItems);
   const dispatch = useDispatch();
-  const shoppingcart = useSelector((state) => state.shopping_cart);
-  const orderProcessing = useSelector((state) => state.active_order);
-  const order_id = useSelector((state) => state.order_id);
-  const complete_order = useSelector((state) => state.complete_order);
+  const shoppingcart = useSelector((state) => state.cart.shopping_cart);
+  const orderProcessing = useSelector((state) => state.cart.active_order);
+  const order_id = useSelector((state) => state.cart.order_id);
+  const complete_order = useSelector((state) => state.cart.complete_order);
 
   const handleOrderSubmit = () => {
     dispatch(loadCart());

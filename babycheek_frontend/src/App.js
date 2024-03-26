@@ -23,7 +23,7 @@ const App = () => {
     }
   }, [dispatch, dataFetched]);
   
-  const page_data = useSelector((state) => state.menuItems);
+  const page_data = useSelector((state) => state.cart.menuItems);
 
   return (
     <div id="App">

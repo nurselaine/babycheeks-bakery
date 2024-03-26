@@ -6,34 +6,28 @@ import { TotalSales } from './TotalSales'
 import { useGetOrders } from '../../../hooks/useGetOrders'
 import { TotalCustomers } from './TotalCustomers'
 import { TotalOrders } from './TotalOrders'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchOrderData } from '../../../Redux/actions/cartActions'
+
 
 export default function DashboardOverview() {
-  const [totalSales, setTotalSales] = useState(0)
-  const [totalCustomers, setTotalCustomers] = useState(0)
-  const [totalOrders, setTotalOrders] = useState(0)
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const orders = await useGetOrders()
-        const total = orders.reduce((acc, order) => {
-          return acc + parseFloat(order.total)
-        }, 0)
-        setTotalSales(total)
-        const customers = orders.map((order) => {
-          return order.firstname + ' ' + order.lastname
-        })
-        const uniqueCustomers = customers.filter((value, index, array) => {
-          return array.indexOf(value) === index
-        })
-        setTotalCustomers(uniqueCustomers.length)
-        setTotalOrders(orders.length)
-      } catch (error) {
-        console.log('error', error)
-      }
-    }
+  const [dataFetched, setDataFetched] = useState(false);
+  const dispatch = useDispatch();
 
-    fetchData()
-  }, [])
+  useEffect(() => {
+    if(!dataFetched){
+      setDataFetched(true);
+      dispatch(fetchOrderData());
+    }
+  }, [dispatch, dataFetched]);
+
+  const allOrders = useSelector((state) => state.dashboard.orders);
+  const totalOrders = allOrders.length;
+  const totalCustomers = useSelector((state) => state.dashboard.total_customers);
+  const totalSales = useSelector((state) => state.dashboard.total_sales);
+  console.log("total customers" + totalCustomers);
+
+  console.log("ALL ORDERS", allOrders, totalCustomers, totalSales);
   return (
     <DashboardLayout>
       <Grid container spacing={3}>
