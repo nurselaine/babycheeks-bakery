@@ -176,6 +176,25 @@ router.get('/getCustomerOrder/:id', async (req, res, next) => {
   }
 });
 
+router.get('/getItemCounter/:id', async (req, res, next) => {
+  try {
+    const menu_id = req.params.id;
+    let rows = await query(`SELECT COUNT(*) AS total_count FROM ORDER_ITEM where menu_id=?`, [menu_id]);
+    
+    res.status(200).send({
+      message: 'SUCCESSFULLY COUNTED ALL OF MENU ID' + menu_id +' ORDERs',
+      total_count: rows,
+      timestamp: new Date(),
+    });
+  } catch (error) {
+    res.status(200).send({
+      message: 'UNABLE TO QUERY FOR YTD ITEM COUNT',
+      error,
+      timestamp: new Date(),
+    });
+  }
+});
+
 router.get('/getAllOrderItems', async (req, res, next) => {
   let items = await query(`SELECT * FROM ORDER_ITEM`);
   console.log('order item table', items);
