@@ -1,4 +1,11 @@
-import { FETCH_ORDERS_REQUEST, FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAILURE } from '../actionTypes/actionTypes'
+import {
+  FETCH_ORDERS_REQUEST,
+  FETCH_ORDERS_SUCCESS,
+  FETCH_ORDERS_FAILURE,
+  UPDATE_ORDER_STATUS_REQUEST,
+  UPDATE_ORDER_STATUS_FAILURE,
+  UPDATE_ORDER_STATUS_SUCCESS
+} from '../actionTypes/actionTypes'
 
 export const initialDashboardState = {
   orders: [
@@ -76,7 +83,7 @@ const dashboardReducer = (state = initialDashboardState, action) => {
         error: null
       }
     case FETCH_ORDERS_SUCCESS:
-      const {fulfilledOrders, unFulfilledOrders, total, customers, uniqueCustomers} = sanitizeDashboardData(action);
+      const { fulfilledOrders, unFulfilledOrders, total, customers, uniqueCustomers } = sanitizeDashboardData(action)
       return {
         ...state,
         loading: false,
@@ -86,9 +93,34 @@ const dashboardReducer = (state = initialDashboardState, action) => {
         total_sales: total,
         customers: customers,
         total_customers: uniqueCustomers.length,
-        total_orders: action.payload.length,
+        total_orders: action.payload.length
       }
     case FETCH_ORDERS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      }
+    case UPDATE_ORDER_STATUS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      }
+    case UPDATE_ORDER_STATUS_SUCCESS:
+
+      const newFulfilled = state.fulfilled.map((order) => {
+        if(order.id === action.order_id){
+          order.fulfilled = 0;
+        }
+      })
+
+      return {
+        ...state,
+        loading: false,
+        fulfilled: newFulfilled,
+      }
+    case UPDATE_ORDER_STATUS_FAILURE:
       return {
         ...state,
         loading: false,
@@ -105,14 +137,14 @@ const sanitizeDashboardData = (action) => {
   let orders = action.payload
 
   const fulfilledOrders = orders.filter((order) => {
-    if(order.fulfilled === 1){
-      return order;
+    if (order.fulfilled === 1) {
+      return order
     }
   })
 
   const unFulfilledOrders = orders.filter((order) => {
-    if(order.fulfilled === 0){
-      return order;
+    if (order.fulfilled === 0) {
+      return order
     }
   })
 
@@ -128,7 +160,7 @@ const sanitizeDashboardData = (action) => {
     return array.indexOf(value) === index
   })
 
-  console.log( fulfilledOrders, unFulfilledOrders, total, customers, uniqueCustomers);
+  console.log(fulfilledOrders, unFulfilledOrders, total, customers, uniqueCustomers)
 
-  return { fulfilledOrders, unFulfilledOrders, total, customers, uniqueCustomers};
+  return { fulfilledOrders, unFulfilledOrders, total, customers, uniqueCustomers }
 }

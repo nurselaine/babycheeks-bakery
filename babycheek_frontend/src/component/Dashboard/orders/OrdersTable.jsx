@@ -19,20 +19,28 @@ import { CheckSquare as CheckSquareIcon } from '@phosphor-icons/react/dist/ssr'
 import { useSelection } from './../../../hooks/useSelection'
 import { XSquare as XSquareIcon } from '@phosphor-icons/react/dist/ssr'
 import { useOrderStatusUpdater } from '../../../hooks/useOrderStatusUpdater'
+import { useDispatch } from 'react-redux'
+import { updateOrderStatusRequest } from '../../../Redux/actions/dashboardActions'
 
 function noop() {
   // do nothing
 }
 
 export function OrdersTable({ count = 0, rows = [], page = 0, rowsPerPage = 0 }) {
+  const dispatch = useDispatch();
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id)
   }, [rows])
+  
 
   const { selectAll, deselectAll, selectOne, deselectOne, selected } = useSelection(rowIds)
 
   const selectedSome = (selected?.size ?? 0) > 0 && (selected?.size ?? 0) < rows.length
   const selectedAll = rows.length > 0 && selected?.size === rows.length
+
+  const handleOrderStatus = (row) => {
+    dispatch(updateOrderStatusRequest(row.id));
+  }
 
   return (
     <Card>
@@ -88,7 +96,7 @@ export function OrdersTable({ count = 0, rows = [], page = 0, rowsPerPage = 0 })
                       </Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell onClick={() => useOrderStatusUpdater(row.id)}>{row.fulfilled === 1 ? <CheckSquareIcon color='#15b79f' /> : <XSquareIcon color='#f04438' />}</TableCell>
+                  <TableCell onClick={() => handleOrderStatus(row)}>{row.fulfilled === 1 ? <CheckSquareIcon color='#15b79f' /> : <XSquareIcon color='#f04438' />}</TableCell>
                   <TableCell>{dayjs(row.order_date).format('MMM D, YYYY')}</TableCell>
                   <TableCell>${row.total}</TableCell>
                 </TableRow>

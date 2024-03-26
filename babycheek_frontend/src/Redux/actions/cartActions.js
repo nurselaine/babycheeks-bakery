@@ -53,42 +53,11 @@ export const fetchData = () => {
   }
 }
 
-const fetchOrderRequest = () => {
-  return {
-    type: FETCH_ORDERS_REQUEST,
-  };
-};
-
-const fetchOrderSuccess = (payload) => {
-  return {
-    type: FETCH_ORDERS_SUCCESS,
-    payload: payload,
-  };
-};
-
-const fetchOrderFailure = (error) => {
-  return {
-    type: FETCH_ORDERS_FAILURE,
-    error,
-  };
-};
-
-export const fetchOrderData = () => {
-  return async (dispatch, getState) => {
-    dispatch(fetchOrderRequest());
-    try {
-      const response = await fetch('http://localhost:3001/db/getAllOrders')
-      .then((response) => response.json())
-      .then((data) => {return data.orders})
-      .catch((error) => console.error(error));
-
-      console.log("orders ", response);
-      dispatch(fetchOrderSuccess(response));
-    } catch (error) {
-      dispatch(fetchOrderFailure(error.message));
-    }
-  }
-}
+// const fetchOrderRequest = () => {
+//   return {
+//     type: FETCH_ORDERS_REQUEST,
+//   };
+// };
 
 const addItem = (item_id) => {
   return {
@@ -155,9 +124,9 @@ export {
   fetchMenuItemsRequest,
   fetchMenuItemsSuccess,
   fetchMenuItemsFailure,
-  fetchOrderRequest,
-  fetchOrderSuccess,
-  fetchOrderFailure,
+  // fetchOrderRequest,
+  // fetchOrderSuccess,
+  // fetchOrderFailure,
   addItem,
   deleteItem,
   updateItem,

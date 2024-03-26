@@ -10,29 +10,21 @@ import DashboardLayout from './../DashboardLayout'
 import { useGetOrders } from '../../../hooks/useGetOrders'
 import { OrderFilters } from './OrdersFilter'
 import { OrdersTable } from './OrdersTable'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchOrderData } from '../../../Redux/actions/dashboardActions'
 
 export const metadata = { title: `Customers | Dashboard` }
 
 const OrdersOverview = () => {
+  const dispatch = useDispatch();
   const page = 0
   const rowsPerPage = 25
-  const [orderInfo, setOrderInfo] = useState([])
 
+  const orderInfo = useSelector((state) => state.dashboard.orders);
+  
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let orders = await useGetOrders()
-        orders = orders.sort((a, b) => {
-          return new Date(b.order_date) - new Date(a.order_date)
-        })
-        setOrderInfo(orders)
-      } catch (error) {
-        console.log('error', error)
-      }
-    }
-
-    fetchData()
-  }, [])
+    dispatch(fetchOrderData());
+  }, [dispatch]);
 
   const paginatedOrders = applyPagination(orderInfo, page, rowsPerPage)
   return (

@@ -7,7 +7,7 @@ import { useGetOrders } from '../../../hooks/useGetOrders'
 import { TotalCustomers } from './TotalCustomers'
 import { TotalOrders } from './TotalOrders'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchOrderData } from '../../../Redux/actions/cartActions'
+import { fetchOrderData } from '../../../Redux/actions/dashboardActions'
 import SalesGraph from './SalesGraph'
 
 
