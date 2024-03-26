@@ -18,7 +18,6 @@ import dayjs from 'dayjs'
 import { CheckSquare as CheckSquareIcon } from '@phosphor-icons/react/dist/ssr'
 import { useSelection } from './../../../hooks/useSelection'
 import { XSquare as XSquareIcon } from '@phosphor-icons/react/dist/ssr'
-import { useOrderStatusUpdater } from '../../../hooks/useOrderStatusUpdater'
 import { useDispatch } from 'react-redux'
 import { updateOrderStatusRequest } from '../../../Redux/actions/dashboardActions'
 
@@ -31,7 +30,7 @@ export function OrdersTable({ count = 0, rows = [], page = 0, rowsPerPage = 0 })
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id)
   }, [rows])
-  
+
 
   const { selectAll, deselectAll, selectOne, deselectOne, selected } = useSelection(rowIds)
 
@@ -41,6 +40,8 @@ export function OrdersTable({ count = 0, rows = [], page = 0, rowsPerPage = 0 })
   const handleOrderStatus = (row) => {
     dispatch(updateOrderStatusRequest(row.id));
   }
+
+  console.log("ROWS: ", rows);
 
   return (
     <Card>

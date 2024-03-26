@@ -11,6 +11,8 @@ import { CustomersFilters } from './CustomersFilter'
 import { CustomersTable } from './CustomersTable'
 import DashboardLayout from './../DashboardLayout'
 import { useGetOrders } from '../../../hooks/useGetOrders'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchOrderData } from '../../../Redux/actions/dashboardActions'
 
 export const metadata = { title: `Customers | Dashboard` }
 
@@ -27,31 +29,37 @@ const customers = [
 ]
 
 const CustomerOverview = () => {
+  const dispatch = useDispatch();
   const page = 0
   const rowsPerPage = 10
-  const [customerInfo, setCustomerInfo] = useState([])
+  // const [customerInfo, setCustomerInfo] = useState([])
+  const customerInfo = useSelector((state) => state.dashboard.customers);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const orders = await useGetOrders()
-        const customers = orders.map((order) => {
-          return {
-            id: order.id,
-            firstName: order.firstname,
-            lastName: order.lastname,
-            orderDate: order.order_date
-          }
-        })
+    dispatch(fetchOrderData());
+  }, [dispatch]);
 
-        setCustomerInfo(customers)
-      } catch (error) {
-        console.log('error', error)
-      }
-    }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const orders = await useGetOrders()
+  //       const customers = orders.map((order) => {
+  //         return {
+  //           id: order.id,
+  //           firstName: order.firstname,
+  //           lastName: order.lastname,
+  //           orderDate: order.order_date
+  //         }
+  //       })
 
-    fetchData()
-  }, [])
+  //       setCustomerInfo(customers)
+  //     } catch (error) {
+  //       console.log('error', error)
+  //     }
+  //   }
+
+  //   fetchData()
+  // }, [])
 
   const paginatedCustomers = applyPagination(customerInfo, page, rowsPerPage)
   return (

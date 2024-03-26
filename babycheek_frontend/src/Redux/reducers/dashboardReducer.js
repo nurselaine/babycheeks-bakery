@@ -109,22 +109,24 @@ const dashboardReducer = (state = initialDashboardState, action) => {
       }
     case UPDATE_ORDER_STATUS_SUCCESS:
 
-      const newFulfilled = state.fulfilled.map((order) => {
+      const updatedOrders = state.orders.map((order) => {
         if(order.id === action.order_id){
-          order.fulfilled = 0;
+          return {...order, fulfilled: 1}
+        } else {
+          return order
         }
       })
 
       return {
         ...state,
         loading: false,
-        fulfilled: newFulfilled,
+        orders: updatedOrders,
       }
     case UPDATE_ORDER_STATUS_FAILURE:
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.error
       }
     default:
       return state
@@ -153,7 +155,12 @@ const sanitizeDashboardData = (action) => {
   }, 0)
 
   const customers = orders.map((order) => {
-    return order.firstname + ' ' + order.lastname
+    return {
+      id: order.id,
+      firstName: order.firstname,
+      lastName: order.lastname,
+      orderDate: order.order_date
+    }
   })
 
   const uniqueCustomers = customers.filter((value, index, array) => {
