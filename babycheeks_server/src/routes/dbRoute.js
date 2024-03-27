@@ -180,7 +180,7 @@ router.get('/getItemCounter/:id', async (req, res, next) => {
   try {
     const menu_id = req.params.id;
     let rows = await query(`SELECT COUNT(*) AS total_count FROM ORDER_ITEM where menu_id=?`, [menu_id]);
-    
+
     res.status(200).send({
       message: 'SUCCESSFULLY COUNTED ALL OF MENU ID' + menu_id +' ORDERs',
       total_count: rows,
